@@ -4,8 +4,6 @@ package com.so.q2;
  * 第2题 单例设计模式
  * 设计一个类，只能生成该类的一个实例。
  *
- * @author qgl
- * @date 2019/06/21
  */
 public class SingletonPattern2 {}
 

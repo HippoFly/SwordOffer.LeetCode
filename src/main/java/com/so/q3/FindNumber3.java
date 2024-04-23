@@ -20,6 +20,7 @@ public class FindNumber3 {
         if (array == null || array.length == 0) {
             return false;
         }
+        // 矩阵右上角开始比较
         int row = 0;
         int column = array[0].length - 1;
 
@@ -27,6 +28,7 @@ public class FindNumber3 {
             if (array[row][column] == target) {
                 return true;
             }
+            // i已经是行最大，列最小，则 i 大于target则挪 行小一点 i小于target则挪到 列大一点
             if (array[row][column] > target) {
                 column--;
             } else {

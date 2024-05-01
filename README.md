@@ -70,3 +70,12 @@
 |第六十一题|[把二叉树打印成多行](https://github.com/GaoLeiQin/SwordOffer/blob/master/src/main/java/com/so/LevelPrintTree61.java)|[测试61](https://github.com/GaoLeiQin/SwordOffer/blob/master/src/test/java/com/so/Test61.java)|
 |第六十二题|[序列化二叉树](https://github.com/GaoLeiQin/SwordOffer/blob/master/src/main/java/com/so/Serializer62.java)|[测试62](https://github.com/GaoLeiQin/SwordOffer/blob/master/src/test/java/com/so/Test62.java)|
 |第六十三题|[二叉搜索树的第K个节点](https://github.com/GaoLeiQin/SwordOffer/blob/master/src/main/java/com/so/KthNode63.java)|[测试63](https://github.com/GaoLeiQin/SwordOffer/blob/master/src/test/java/com/so/Test63.java)|
+
+
+## Leetcode 分类
+
+### Hash
+Q49_GroupAnagrams
+
+### 巧用内置API
+Q49_GroupAnagrams stream流

@@ -1,4 +1,4 @@
-package com.so.lc.suminarray;
+package com.so.lc.SumInArray;
 
 
 import java.util.HashMap;

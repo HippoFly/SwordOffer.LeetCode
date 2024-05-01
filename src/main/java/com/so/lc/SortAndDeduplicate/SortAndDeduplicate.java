@@ -1,4 +1,4 @@
-package com.so.lc.sortanddedup;
+package com.so.lc.SortAndDeduplicate;
 
 import java.util.Arrays;
 import java.util.HashSet;

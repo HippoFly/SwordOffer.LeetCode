@@ -1,4 +1,4 @@
-package com.so.lc.baseconversion;
+package com.so.lc.BaseConversion;
 
 import java.util.Scanner;
 

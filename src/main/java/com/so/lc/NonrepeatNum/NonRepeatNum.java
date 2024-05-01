@@ -1,4 +1,4 @@
-package com.so.lc.nonrepeatnum;
+package com.so.lc.NonrepeatNum;
 
 import java.util.HashSet;
 import java.util.Scanner;

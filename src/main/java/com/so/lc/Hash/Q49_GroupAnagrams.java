@@ -41,6 +41,7 @@ public class Q49_GroupAnagrams {
         }
         StringBuilder res = new StringBuilder();
         for (int i : hash) {
+            res.append("|");
             res.append(i);
         }
         return res.toString();

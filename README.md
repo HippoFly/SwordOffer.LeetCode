@@ -81,5 +81,8 @@ Q438_AnagramsInString 哈希作为窗口的计数数组
 ### 滑动窗口
 Q438_AnagramsInString 哈希作为窗口的计数数组
 
+### 堆排序
+Q347_TopKFrequentElements
+
 ### 巧用内置API
 Q49_GroupAnagrams stream流

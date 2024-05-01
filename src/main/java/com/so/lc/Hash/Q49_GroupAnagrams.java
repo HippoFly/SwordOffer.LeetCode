@@ -1,6 +1,7 @@
 package com.so.lc.Hash;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 描述
@@ -44,6 +45,19 @@ public class Q49_GroupAnagrams {
         }
         return res.toString();
     }
+
+    public List<List<String>> groupAnagrams2(String[] strs) {
+        return new ArrayList<>(Arrays.stream(strs)
+                .collect(Collectors.groupingBy(str -> {
+                    // 返回 str 排序后的结果。
+                    // 按排序后的结果来grouping by，算子类似于 sql 里的 group by。
+                    char[] array = str.toCharArray();
+                    Arrays.sort(array);
+                    return new String(array);
+                })).values());
+    }
+
+
 
     public static void main(String[] args) {
         System.out.println(getHash("ted"));

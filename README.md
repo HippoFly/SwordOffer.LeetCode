@@ -81,6 +81,8 @@ Q438_AnagramsInString 哈希作为窗口的计数数组
 ### 滑动窗口
 Q438_AnagramsInString 哈希作为窗口的计数数组
 
+### 桶排序
+Q41_MissingPositive
 ### 堆排序
 Q347_TopKFrequentElements
 

@@ -33,6 +33,35 @@ public class Q41_MissingPositive {
          }
     }
 
+    /**
+     * 桶排序
+     * @param nums
+     * @return
+     */
+    public int firstMissingPositive2(int[] nums) {
+        int res = 0;
+        int n = nums.length - 1;
+        int tmp = 0;
+
+        while(res <= n){
+            if(nums[res] == res + 1){
+                res++;
+            }else{
+                tmp = nums[res];
+                if(tmp > n + 1 || tmp < res + 1 || nums[tmp - 1] == tmp){
+                    nums[res] = nums[n--];
+                }else{
+                    nums[res] = nums[tmp - 1];
+                    nums[tmp - 1] = tmp;
+                }
+            }
+        }
+
+        return res + 1;
+    }
+
+
+
     public static void main(String[] args) {
         Q41_MissingPositive missingPositive = new Q41_MissingPositive();
         System.out.println(missingPositive.firstMissingPositive(new int[]{1, 2, 0, -1}));

@@ -74,6 +74,9 @@
 
 ## Leetcode 分类
 
+### BinarySearch
+Q35_SearchInsertPosition
+
 ### Hash
 Q49_GroupAnagrams
 Q438_AnagramsInString 哈希作为窗口的计数数组

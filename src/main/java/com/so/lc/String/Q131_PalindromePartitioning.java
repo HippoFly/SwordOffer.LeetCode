@@ -38,10 +38,10 @@ public class Q131_PalindromePartitioning {
 
         // 遍历所有可能的分割点
         for (int i = start; i < string.length(); i++) {
-            String substring = string.substring(start, i + 1);
+            String tempStrResult = string.substring(start, i + 1);
             // 如果当前子串是回文字符串，加入当前分割方案，并继续向下生成
-            if (isPalindrome(substring)) {
-                currentPartition.add(substring);
+            if (isPalindrome(tempStrResult)) {
+                currentPartition.add(tempStrResult);
                 backtrack(i + 1);
                 // 回溯，移除当前加入的子串，尝试其他分割方案
                 currentPartition.remove(currentPartition.size() - 1);

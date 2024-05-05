@@ -89,6 +89,7 @@ Q76_MinimumWindowSubstring 最明白窗口移动的一题
 Q438_AnagramsInString 哈希作为窗口的计数数组
 
 ### 回溯
+Q51_NQueens
 Q79_WordSearch DFS回溯
 Q131_PalindromePartitioning 这里回文串很难
 

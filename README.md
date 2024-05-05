@@ -77,11 +77,15 @@
 ### BinarySearch
 Q35_SearchInsertPosition
 
+### PrefixSum前缀
+Q169_MajorityElement
+
 ### Hash
 Q49_GroupAnagrams
 Q438_AnagramsInString 哈希作为窗口的计数数组
 
 ### 滑动窗口
+Q76_MinimumWindowSubstring 最明白窗口移动的一题
 Q438_AnagramsInString 哈希作为窗口的计数数组
 
 ### 桶排序

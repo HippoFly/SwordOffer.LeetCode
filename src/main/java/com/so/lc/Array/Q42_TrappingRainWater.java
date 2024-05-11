@@ -10,6 +10,12 @@ package com.so.lc.Array;
 
 public class Q42_TrappingRainWater {
 
+    /**
+     * 两窗口指针，向内，找到下跌转折点，然后从矮一点的出发，每比转折点低一些，就加雨水，高一些就切换转折点，
+     * 同时如果新转折点大于左右最高，又得切换左右最高
+     * @param height
+     * @return
+     */
     public int trap(int[] height) {
         if (height == null || height.length == 0) return 0; // 如果数组为空，则返回 0
 
@@ -18,7 +24,7 @@ public class Q42_TrappingRainWater {
         int result = 0; // 初始化结果变量为 0，用于累计雨水容量
 
         while (left < right) {
-            // 从矮处开始
+            // 从矮处开始，同高度右侧开始
             // 如果左侧高度小于右侧高度，
             if (height[left] < height[right]) {
                 // 当前列为最大，不计算积水，只更新高度，因为装不住水
@@ -45,7 +51,7 @@ public class Q42_TrappingRainWater {
     }
 
     public static void main(String[] args) {
-        int[] height = {0,1,0,2,1/*,0,1,3,2,1,2,1*/};
+        int[] height = {3,0,1,0,2,1/*,0,1,3,2,1,2,1*/};
         Q42_TrappingRainWater solution = new Q42_TrappingRainWater();
         int result = solution.trap(height);
         System.out.println(result);

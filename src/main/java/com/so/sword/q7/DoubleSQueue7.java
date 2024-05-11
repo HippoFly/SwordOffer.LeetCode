@@ -1,4 +1,4 @@
-package com.so.q7;
+package com.so.sword.q7;
 
 import java.util.Stack;
 

@@ -1,5 +1,6 @@
-package com.so.q8;
+package com.so.sword.q8;
 
+import com.so.sword.q8.MinNumber8;
 import org.junit.Test;
 
 /**

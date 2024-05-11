@@ -1,6 +1,7 @@
-package com.so.q5;
+package com.so.sword.q5;
 
-import com.so.unfinished.Common.ListNode;
+import com.so.sword.q5.PrintListReversing5;
+import com.so.sword.unfinished.Common.ListNode;
 import org.junit.Test;
 
 /**

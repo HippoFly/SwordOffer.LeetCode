@@ -1,4 +1,4 @@
-package com.so.q3;
+package com.so.sword.q3;
 
 /**
  * 第3题

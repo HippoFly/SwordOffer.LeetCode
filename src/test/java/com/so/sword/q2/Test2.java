@@ -1,5 +1,6 @@
-package com.so.q2;
+package com.so.sword.q2;
 
+import com.so.sword.q2.LazySingleton1;
 import org.junit.Test;
 
 /**

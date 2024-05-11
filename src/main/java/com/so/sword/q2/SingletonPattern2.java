@@ -1,4 +1,4 @@
-package com.so.q2;
+package com.so.sword.q2;
 
 /**
  * 第2题 单例设计模式

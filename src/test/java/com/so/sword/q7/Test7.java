@@ -1,5 +1,6 @@
-package com.so.q7;
+package com.so.sword.q7;
 
+import com.so.sword.q7.DoubleSQueue7;
 import org.junit.Test;
 
 /**

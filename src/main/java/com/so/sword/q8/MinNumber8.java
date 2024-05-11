@@ -1,4 +1,4 @@
-package com.so.q8;
+package com.so.sword.q8;
 
 /**
  * 第8题

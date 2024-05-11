@@ -1,4 +1,4 @@
-package com.so.q4;
+package com.so.sword.q4;
 
 import java.util.Arrays;
 

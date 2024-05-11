@@ -1,5 +1,6 @@
-package com.so.q3;
+package com.so.sword.q3;
 
+import com.so.sword.q3.FindNumber3;
 import org.junit.Test;
 
 /**

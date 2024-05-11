@@ -1,6 +1,6 @@
-package com.so.q4;
+package com.so.sword.q4;
 
-import com.so.q4.ReplaceBlank4;
+import com.so.sword.q4.ReplaceBlank4;
 import org.junit.Test;
 
 /**

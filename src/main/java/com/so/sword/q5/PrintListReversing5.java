@@ -1,8 +1,8 @@
-package com.so.q5;
+package com.so.sword.q5;
 
 import java.util.ArrayList;
 import java.util.Stack;
-import com.so.unfinished.Common.ListNode;
+import com.so.sword.unfinished.Common.ListNode;
 
 /**
  * 第5题 从尾到头打印链表

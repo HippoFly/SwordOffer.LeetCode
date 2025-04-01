@@ -1,7 +1,6 @@
 package com.so.lc.leetcode;
 
 import com.so.common.ListNode;
-import com.so.sword.unfinished.Common;
 
 /**
  * 描述

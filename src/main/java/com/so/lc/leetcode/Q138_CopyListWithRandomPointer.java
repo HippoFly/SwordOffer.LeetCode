@@ -1,6 +1,6 @@
 package com.so.lc.leetcode;
 
-import com.so.common.Node;
+import com.so.common.ListNode;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,14 +13,14 @@ import java.util.Map;
  * @createDate 2024/5/11 18:58
  **/
 
-public class Q138_CopyListwithRandomPointer {
-    public Node copyRandomList(Node head) {
+public class Q138_CopyListWithRandomPointer {
+    public ListNode copyRandomList(ListNode head) {
         if(head == null) return null;
-        Node cur = head;
-        Map<Node, Node> map = new HashMap<>();
+        ListNode cur = head;
+        Map<ListNode, ListNode> map = new HashMap<>();
         // 3. 复制各节点，并建立 “原节点 -> 新节点” 的 Map 映射
         while(cur != null) {
-            map.put(cur, new Node(cur.val));
+            map.put(cur, new ListNode(cur.val));
             cur = cur.next;
         }
         cur = head;

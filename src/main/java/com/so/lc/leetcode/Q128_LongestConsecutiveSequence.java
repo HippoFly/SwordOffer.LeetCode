@@ -30,7 +30,7 @@ import java.util.Set;
 public class Q128_LongestConsecutiveSequence {
     /**
      * 简单来说就是每个数都判断一次这个数是不是连续序列的开头那个数。
-     *
+     * <p>
      * 怎么判断呢，就是用哈希表查找这个数前面一个数是否存在，即num-1在序列中是否存在。存在那这个数肯定不是开头，直接跳过。
      * 因此只需要对每个开头的数进行循环，直到这个序列不再连续，因此复杂度是O(n)。 以题解中的序列举例:
      * [100，4，200，1，3，4，2]
@@ -47,7 +47,7 @@ public class Q128_LongestConsecutiveSequence {
      * @return 返回最长连续序列的长度
      */
     public static int longestConsecutive(int[] nums) {
-        Set<Integer> num_set = new HashSet<Integer>();
+        Set<Integer> num_set = new HashSet<>();
         // 去重
         for (int num : nums) {
             num_set.add(num);

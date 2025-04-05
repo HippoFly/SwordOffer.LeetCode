@@ -3,18 +3,32 @@ package com.so.lc.leetcode;
 import java.util.HashSet;
 
 /**
- * 描述
- * 给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
+ * 3. 无重复字符的最长子串
+ * 给定一个字符串 s ，请你找出其中不含有重复字符的 最长 子串 的长度。
+ * <p>
+ * 示例 1:
+ * <p>
+ * 输入: s = "abcabcbb"
+ * 输出: 3
+ * 解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+ * <p>
+ * 示例 2:
+ * <p>
+ * 输入: s = "bbbbb"
+ * 输出: 1
+ * 解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。
  *
  * @author FlyHippo
  * @version 1.0
  * @createDate 2024/5/8 17:50
+ * @see <a href="https://leetcode.cn/problems/longest-substring-without-repeating-characters/">无重复字符的最长子串</a>
+ * @tag 滑动窗口
  **/
 
 public class Q03_LongestSubstringWithoutRepeatingCharacters {
     public static void main(String[] args) {
         Q03_LongestSubstringWithoutRepeatingCharacters characters = new Q03_LongestSubstringWithoutRepeatingCharacters();
-        characters.lengthOfLongestSubstring("ABCDDEFGG");
+        System.out.println(characters.lengthOfLongestSubstring("ABCDDEFGG"));
     }
 
     /**
@@ -24,28 +38,32 @@ public class Q03_LongestSubstringWithoutRepeatingCharacters {
      * @return
      */
     public int lengthOfLongestSubstring(String s) {
-        if (s == null || s.length() == 0) {
+        if (s == null || s.isEmpty()) {
             return 0;
         }
-
+        // 记录窗口内不重复字符的集合
         HashSet<Character> set = new HashSet<>();
-        int left = 0;
-        int right = 0;
+        // 窗口的左右边界，均从0开始
+        int left = 0; int right = 0;
         int maxLen = 0;
 
+        // 窗口右开始向字符串右边移动，保证不越位
         while (right < s.length()) {
-            char ch = s.charAt(right);
-            if (!set.contains(ch)) {
-                set.add(ch);
-                // 比如left=1, right=3 实际上长度是 1,2,3所以求长度+1
+            char curChar = s.charAt(right);
+
+            // 如果不包含当前字符，则添加到集合中，并且右移窗口右边界
+            if (!set.contains(curChar)) {
+                set.add(curChar);
+               // 窗口最大值更新：如果新的窗口长度大于最大值，更新最大值
                 maxLen = Math.max(maxLen, right - left + 1);
                 right++;
-                //这里已经包含右边界字符，既不加进去，右边界也不再挪
-                // 而左边界还需要右挪
+
+                // 如果包含当前字符，则窗口左边界向右移动，直到不包含当前字符为止
             } else {
                 set.remove(s.charAt(left));
                 left++;
             }
+            // 综合以上if我们发现一旦右边指针遇到重复字符，左边界会向右移动，直到不包含当前字符为止，这个条件判断的else会多次生序
         }
 
         return maxLen;

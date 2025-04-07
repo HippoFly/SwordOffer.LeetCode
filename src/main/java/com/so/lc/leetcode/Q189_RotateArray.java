@@ -1,32 +1,50 @@
 package com.so.lc.leetcode;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
- * 描述
+ * 189. 轮转数组
+ * 给定一个整数数组 nums，将数组中的元素向右轮转 k 个位置，其中 k 是非负数。
+ * <p>
+ * 示例 1:
+ *
+ * 输入: nums = [1,2,3,4,5,6,7], k = 3
+ * 输出: [5,6,7,1,2,3,4]
+ * 解释:
+ * 向右轮转 1 步: [7,1,2,3,4,5,6]
+ * 向右轮转 2 步: [6,7,1,2,3,4,5]
+ * 向右轮转 3 步: [5,6,7,1,2,3,4]
+ * <p>
+ * 示例 2:
+ *
+ * 输入：nums = [-1,-100,3,99], k = 2
+ * 输出：[3,99,-1,-100]
+ * 解释:
+ * 向右轮转 1 步: [99,-1,-100,3]
+ * 向右轮转 2 步: [3,99,-1,-100]
  *
  * @author FlyHippo
  * @version 1.0
  * @createDate 2024/5/3 20:50
+ * @tag 集合（链表）
  **/
 
 public class Q189_RotateArray {
+   // 解法1:利用集合LinkedList的特点
     public void rotate(int[] nums, int k) {
-        int n = nums.length;
-        int[] newArr = new int[n];
-        for (int i = 0; i < n; ++i) {
-            // 以k=3, n=7
-            // i, i+k, (i + k) % n
-            // 0，3 , 3
-            // 1，4 , 4
-            // 2，5 , 5
-            // 3，6 , 6
-            // 4，7 , 0
-            // 5，8 , 1
-            // 6，9 , 2 也就是通过 %  就实现了环状
-            newArr[(i + k) % n] = nums[i];
+        LinkedList<Integer> list = new LinkedList<>();
+        for (int num : nums) {
+            list.add(num);
         }
-        System.arraycopy(newArr, 0, nums, 0, n);
+        // 处理 k 大于 n 的情况
+        k = k % nums.length;
+        for (int i = 0; i < k; i++) {
+            list.addFirst(list.removeLast());
+        }
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = list.get(i);
+        }
     }
 
 

@@ -3,30 +3,53 @@ package com.so.lc.leetcode;
 import com.so.common.ListNode;
 
 /**
- * 描述
+ * 160. 相交链表
+ * 给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表不存在相交节点，返回 null 。
  *
  * @author FlyHippo
  * @version 1.0
  * @createDate 2024/5/11 18:21
+ * @tag 链表
  **/
 
 public class Q160_IntersectionTwoLinkedLists {
+
     /**
-     * 两链表先走到尽头吗，再拼接，走对方的起点，第二轮无论如何最后肯定会相遇
-     * @param headA
-     * @param headB
-     * @return
+     * 解决这个问题的关键是找到两个链表长度的差值，然后让较长的链表先走几步，直到两个链表剩下的长度一样
+     * 这样就可以同时遍历两个链表，找到交点
+     * 如果没有交点，两个指针最终都会变成null，循环结束，返回null
+     *
+     * @param headA 第一个链表的头节点
+     * @param headB 第二个链表的头节点
+     * @return 返回两个链表的交点节点，如果没有交点，则返回null
      */
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        // 检查输入的链表头节点是否为空
         if (headA == null || headB == null) return null;
-        //生成两指针
+
+        // 生成两个指针，分别指向两个链表的头节点
         ListNode pA = headA, pB = headB;
-        //进入一个循环，只有当 pA 和 pB 指向同一个节点时才退出循环，即找到了交点或者遍历到链表末尾（没有交点）。
+
+        // 进入一个循环，只有当 pA 和 pB 指向同一个节点时才退出循环，即找到了交点或者遍历到链表末尾（没有交点）。
+        // 这里有一个默认条件：每一个链表最后都是null，那么即使俩链表没有交点，最后第二轮会同时到null
         while (pA != pB) {
-            // a指针不为空，取下一个节点，直到为null，又连接B的头节点
-            pA = (pA == null) ? headB : pA.next;
-            pB = (pB == null) ? headA : pB.next;
+            // 如果 pA 到达链表末尾，则将其重定位到 headB
+            if (pA == null) {
+                pA = headB;
+            } else {
+                pA = pA.next;
+            }
+
+            // 如果 pB 到达链表末尾，则将其重定位到 headA
+            if (pB == null) {
+                pB = headA;
+            } else {
+                pB = pB.next;
+            }
         }
+
+        // 如果找到了交点，pA和pB会指向同一个节点；如果没有交点，pA和pB最终都会变成null
+        // 返回pA或pB都可以，因为它们指向的是同一个节点
         return pA;
     }
 

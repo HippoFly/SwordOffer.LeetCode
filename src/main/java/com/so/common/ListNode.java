@@ -13,4 +13,22 @@ public class ListNode {
         this.next = null;
         this.random = null;
     }
+
+
+    /**
+     * 静态方法：打印链表
+     */
+    public static String toString(ListNode head) {
+        StringBuilder sb = new StringBuilder();
+        ListNode current = head;
+        while (current != null) {
+            sb.append(current.val);
+            if (current.next != null) {
+                sb.append("->");
+            }
+            current = current.next;
+        }
+        return sb.toString();
+    }
+
 }

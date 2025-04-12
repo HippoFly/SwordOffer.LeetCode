@@ -30,5 +30,13 @@ public class ListNode {
         }
         return sb.toString();
     }
+    @Override
+    public String toString() {
+        String nextStr = next == null ? "null" : "" + next.val;
+        return "{" +
+                "val=" + val +
+                ", next=" + nextStr +
+                '}';
+    }
 
 }

@@ -13,6 +13,11 @@ public class ListNode {
         this.next = null;
         this.random = null;
     }
+    // 带值和下一个节点的构造方法
+    public ListNode(int val, ListNode next) {
+        this.val = val;
+        this.next = next;
+    }
 
 
     /**

@@ -11,7 +11,7 @@ import com.so.common.TreeNode;
  * @author FlyHippo
  * @version 1.0
  * @created 2025-04-14 16:55
- * @tag
+ * @tag 二叉树，二叉树深度
  * @link <a href=""></a>
  **/
 public class Q104_MaxDepthOfBinaryTree {

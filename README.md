@@ -1,4 +1,18 @@
-# 《剑指offer》Java版代码
+
+
+## LeetCode
+
+
+| 数据结构 | 题型 | 题目                                                                                     |
+| -------- | ---- |----------------------------------------------------------------------------------------|
+| 二叉树   | 遍历 | [144. 二叉树的前序遍历](./src/main/java/com/so/lc/leetcode/Q144_BinaryTreePreorder.java)       |
+|          |      | [94. 二叉树的中序遍历](./src/main/java/com/so/lc/leetcode/Q94_BinaryTreeInorderTraversal.java) |
+|          |      | [145. 二叉树的后序遍历](./src/main/java/com/so/lc/leetcode/Q145_PostorderTraversal.java)                          |
+
+
+
+
+## 《剑指offer》Java版代码
 ![封面图片](https://img-blog.csdnimg.cn/201906290844352.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaXllX3hpbmc=,size_16,color_FFFFFF,t_70)
 
 ##### 提供多种解法以及思路，并在OJ上全都通过

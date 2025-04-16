@@ -20,7 +20,6 @@ public class TreeNode {
 
     @Override
     public String toString() {
-
-        return super.toString();
+        return "{val:" + val + ",left:" + (left != null ? left.val : "null") + ",right:" + (right != null ? right.val : "null") + "}";
     }
 }

@@ -38,7 +38,7 @@ public class Q437_PathSumIII {
         }
 
         // 从根节点开始计算路径和
-        countPaths(root, targetSum);
+        countPaths(root, (long) targetSum);
 
         // 对左右子树递归计算路径和
         pathSum(root.left, targetSum);
@@ -53,7 +53,7 @@ public class Q437_PathSumIII {
      * @param node 当前节点
      * @param targetSum 目标路径和
      */
-    private void countPaths(TreeNode node, int targetSum) {
+    private void countPaths(TreeNode node, long targetSum) {
         if (node == null) {
             return;
         }
@@ -70,6 +70,7 @@ public class Q437_PathSumIII {
         countPaths(node.left, targetSum);
         countPaths(node.right, targetSum);
     }
+
 
     public static void main(String[] args) {
         Q437_PathSumIII solution = new Q437_PathSumIII();

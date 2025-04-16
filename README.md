@@ -2,12 +2,17 @@
 
 ## LeetCode
 
+```
 
-| 数据结构 | 题型 | 题目                                                                                     |
-| -------- | ---- |----------------------------------------------------------------------------------------|
-| 二叉树   | 遍历 | [144. 二叉树的前序遍历](./src/main/java/com/so/lc/leetcode/Q144_BinaryTreePreorder.java)       |
-|          |      | [94. 二叉树的中序遍历](./src/main/java/com/so/lc/leetcode/Q94_BinaryTreeInorderTraversal.java) |
-|          |      | [145. 二叉树的后序遍历](./src/main/java/com/so/lc/leetcode/Q145_PostorderTraversal.java)                          |
+```
+
+| 数据结构 | 题型 | 题目                                                         |
+| -------- | ---- | ------------------------------------------------------------ |
+| 二叉树   | 遍历 | [144. 二叉树的前序遍历](./src/main/java/com/so/lc/leetcode/Q144_BinaryTreePreorder.java)<br />[94. 二叉树的中序遍历](./src/main/java/com/so/lc/leetcode/Q94_BinaryTreeInorderTraversal.java)<br />[145. 二叉树的后序遍历](./src/main/java/com/so/lc/leetcode/Q145_PostorderTraversal.java)<br /> |
+|          | 重构 | [105.  从前序与中序遍历序列构造二叉树](./src/main/java/com/so/lc/leetcode/Q105_ConstructBinaryTreeFromPreorderInorder.java)<br /> |
+|          |      |                                                              |
+|          |      |                                                              |
+|          |      |                                                              |
 
 
 

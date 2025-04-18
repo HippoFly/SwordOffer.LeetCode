@@ -4,79 +4,105 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 描述
- * 覆盖target字符串的最小子串
+ * 76. 最小覆盖子串
+ * 给你一个字符串 s 、一个字符串 t 。
+ * 返回 s 中涵盖 t 所有字符的最小子串。
+ * 如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 "" 。
+ * 示例 1：
+ *
+ * 输入：s = "ADOBECODEBANC", t = "ABC"
+ * 输出："BANC"
+ * 解释：最小覆盖子串 "BANC" 包含来自字符串 t 的 'A'、'B' 和 'C'。
  * @author FlyHippo
  * @version 1.0
  * @createDate 2024/5/5 10:44
  **/
 
 public class Q76_MinimumWindowSubstring {
-    // 覆盖字串返回且唯一，请返回
-    // 1 挪右
-    // 2 计算后果
-    // 3 后果满足进循环
 
-    // 4 刚进满足循环，结果记录（处理）
-
-    // 5 缩左
-    // 6 计算后果
+    /**
+     * 1,初始化数据结构：
+     * 使用两个哈希表 targetFreq 和 windowFreq 分别记录目标字符串 t 和当前窗口中字符的频率。
+     * 定义两个指针 left 和 right 表示滑动窗口的左右边界。
+     * 定义变量 matchCount 记录窗口中已经匹配的字符数量。
+     * 2,扩展窗口：
+     * 不断移动右指针 right，将新字符加入窗口，并更新 windowFreq。
+     * 如果某个字符的频率刚好满足 targetFreq 的要求，则增加 matchCount。
+     * 3,收缩窗口：
+     * 当 matchCount 等于 targetFreq.size() 时，表示当前窗口已完全覆盖 t。
+     * 尝试移动左指针 left，缩小窗口，同时更新最小窗口的边界。
+     * 如果移除的字符导致窗口不再满足覆盖条件，则减少 matchCount。
+     * 4,返回结果：
+     * 遍历结束后，返回最小窗口的子串。
+     * @param s
+     * @param t
+     * @return
+     */
     public String minWindow(String s, String t) {
-        Map<Character, Integer> targetFreq = new HashMap<>();
-        Map<Character, Integer> windowFreq = new HashMap<>();
+        if (s == null || t == null || s.isEmpty() || t.isEmpty()) {
+            return "";
+        }
 
-        // 目标字符串中字符的出现频率
+        // 目标字符频率表 <字符，出现频率>
+        Map<Character, Integer> targetFreq = new HashMap<>();
+        // 目标字符串按字符频率放入哈希
         for (char c : t.toCharArray()) {
             targetFreq.put(c, targetFreq.getOrDefault(c, 0) + 1);
         }
-        // 定义窗口的左右边界 这里左右是要移动的
+
+        // 初始化窗口字符频率表
+        Map<Character, Integer> windowFreq = new HashMap<>();
+
+        // 滑动窗口的左右边界
         int left = 0, right = 0;
-
-        // 这里的左是记录符合覆盖字串的左边界
-        int minLeft = 0;
-        int minRight = Integer.MAX_VALUE;
-
-        // 记录窗口中已经匹配的字符数量
+        // 已匹配的字符数
         int matchCount = 0;
+        // 最小窗口长度
+        int minLength = Integer.MAX_VALUE;
+        // 最小窗口的起始位置
+        int start = 0;
 
-        // 移动右指针，扩展窗口
+        // 保证right
         while (right < s.length()) {
 
-            // （1）右边界：窗口右，先放字符再→挪
-            char c = s.charAt(right);
-            // 更新窗口中字符的出现频率
-            windowFreq.put(c, windowFreq.getOrDefault(c, 0) + 1);
-            right++;
+            // 以下在while前先放入一个虚拟字符，保证left<=right
 
-            // （2）判断：某单个字符是否有且完全频率相等，相等则匹配数加1
-            if (targetFreq.containsKey(c) && windowFreq.get(c).intValue() == targetFreq.get(c).intValue()) {
+            // 扩展窗口：将右指针指向的字符加入窗口
+            char rightChar = s.charAt(right);
+            windowFreq.put(rightChar, windowFreq.getOrDefault(rightChar, 0) + 1);
+
+            // 如果当前字符在目标中且频率匹配，则增加匹配计数
+            if (targetFreq.containsKey(rightChar) &&
+                    windowFreq.get(rightChar).intValue() == targetFreq.get(rightChar).intValue()) {
                 matchCount++;
             }
 
-            // （3）进一步判断（进循环尝试缩圈）： 是否计数器已经等于长短
-            // 窗口中包含了目标字符串，则尝试缩小窗口
+            // 收缩窗口：当窗口中的字符完全覆盖目标时
             while (matchCount == targetFreq.size()) {
-                // 符合就判断是否满足最小窗口，记录下最小坐标
-                if (right - left < minRight-minLeft) {
-                    minRight = right  ;
-                    minLeft = left;
+                // 更新最小窗口
+                if (right - left + 1 < minLength) {
+                    minLength = right - left + 1;
+                    start = left;
                 }
 
-                // （4）（符合）挪左
-                // 左边界右移，移除左字符
-                char leftCharInWindow = s.charAt(left);
-                left++;
-                windowFreq.put(leftCharInWindow, windowFreq.get(leftCharInWindow) - 1);
+                // 移动左指针，尝试缩小窗口
+                char leftChar = s.charAt(left);
+                windowFreq.put(leftChar, windowFreq.get(leftChar) - 1);
 
-                // 如果窗口中某个字符的出现频率小于目标字符串中该字符的出现频率，则匹配数减1
-                if (targetFreq.containsKey(leftCharInWindow) && windowFreq.get(leftCharInWindow) < targetFreq.get(leftCharInWindow)) {
+                // 如果移除的字符导致不匹配，则减少匹配计数
+                if (targetFreq.containsKey(leftChar) &&
+                        windowFreq.get(leftChar).intValue() < targetFreq.get(leftChar).intValue()) {
                     matchCount--;
                 }
+
+                left++; // 缩小窗口
             }
+
+            right++; // 扩展窗口
         }
 
-        // 如果找到了最小窗口，则返回对应的子串，否则返回空串
-        return minRight == Integer.MAX_VALUE ? "" : s.substring(minLeft, minRight);
+        // 返回结果
+        return minLength == Integer.MAX_VALUE ? "" : s.substring(start, start + minLength);
     }
 
 }

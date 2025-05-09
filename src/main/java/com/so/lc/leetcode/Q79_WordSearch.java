@@ -1,7 +1,10 @@
 package com.so.lc.leetcode;
 
 /**
- * 描述
+ * 79. 单词搜索
+ * 给定一个 m x n 二维字符网格 board 和一个字符串单词 word 。如果 word 存在于网格中，返回 true ；否则，返回 false 。
+ * <p>
+ * 单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母不允许被重复使用。
  *
  * @author FlyHippo
  * @version 1.0
@@ -10,39 +13,26 @@ package com.so.lc.leetcode;
 
 public class Q79_WordSearch {
 
-    //三全局变量
-    char[][] board;
-    boolean[][] visited;
-    String word;
 
     /**
      * 遍历
      * 1.判空
      * 2.初始
      * 3.遍历
+     *
      * @param board
      * @param word
      * @return
      */
     public boolean exist(char[][] board, String word) {
-        // 处理输入为空的情况
-        if (board == null || board.length == 0 || board[0].length == 0 || word == null || word.length() == 0) {
-            return false;
-        }
+        // 生成标记二维数组，标记已经访问过的地点
+        int m = board.length;
+        int n = board[0].length;
+        boolean[][] visited = new boolean[m][n];
 
-        int row = board.length;
-        int col = board[0].length;
-
-        // 已经遍历的数组记载
-        this.visited = new boolean[row][col];
-        this.board = board;
-        this.word = word;
-
-        // 遍历二维字符网格
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                // 对于每个单元格，进行深度优先搜索
-                if (dfs( i, j, 0)) {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (dfs(board, word, i, j, 0, visited)) {
                     return true;
                 }
             }
@@ -58,37 +48,45 @@ public class Q79_WordSearch {
      * 3. 布尔四方向
      * 4。不访问
      * 5. 返回
-     * @param i 行坐标
-     * @param j 列坐标
-     * @param index 第n个字符
+     *
+     * @param i     即将访问的数组 行坐标
+     * @param j     列坐标
+     * @param index 匹配第n个字符
      * @return 匹配完成
      */
-    private boolean dfs( int i, int j, int index) {
-        // 检查是否匹配完整个单词
+    private boolean dfs(char[][] board, String word, int i, int j, int index, boolean[][] visited) {
+        // 终止条件：匹配完成
         if (index == word.length()) {
             return true;
         }
 
-        // 边界检查和访问状态检查
-        // i,j坐标 越界，
-        // visited[i][j]已访问，
-        // board字符不符合， 都结束这一层递归
-        if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || visited[i][j] || board[i][j] != word.charAt(index)) {
+        // 剪枝：
+        // i越界 /
+        // j越界 /
+        // 已访问 /
+        // 字符不匹配
+        if (
+                        i < 0 || i >= board.length ||
+                        j < 0 || j >= board[0].length ||
+                        visited[i][j] ||
+                        board[i][j] != word.charAt(index)
+        ) {
             return false;
         }
 
-        // 标记当前单元格为已访问
+        // 如果到这一步，那么有之前的的未越界，未访问过，且当前索引字符匹配
+        // 标记为已访问
         visited[i][j] = true;
 
-        // 沿着四个方向进行深度优先搜索
-        boolean exists = dfs(  i + 1, j, index + 1) ||  // 向下
-                dfs(  i - 1, j, index + 1) ||  // 向上
-                dfs(  i, j + 1, index + 1) ||  // 向右
-                dfs(  i, j - 1, index + 1);    // 向左
+        // 向四个方向探索
+        boolean found = dfs(board, word, i + 1, j, index + 1, visited) ||
+                dfs(board, word, i - 1, j, index + 1, visited) ||
+                dfs(board, word, i, j + 1, index + 1, visited) ||
+                dfs(board, word, i, j - 1, index + 1, visited);
 
-        // 回溯，恢复单元格的访问状态
+        // 回溯
         visited[i][j] = false;
 
-        return exists;
+        return found;
     }
 }

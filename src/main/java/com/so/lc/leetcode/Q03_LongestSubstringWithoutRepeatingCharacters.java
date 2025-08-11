@@ -51,14 +51,16 @@ public class Q03_LongestSubstringWithoutRepeatingCharacters {
         while (right < s.length()) {
             char curChar = s.charAt(right);
 
-            // 如果不包含当前字符，则添加到集合中，并且右移窗口右边界
+            // 如果不包含当前字符，则添加到集合中，并且窗口右边界右移
+
             if (!set.contains(curChar)) {
                 set.add(curChar);
-               // 窗口最大值更新：如果新的窗口长度大于最大值，更新最大值
+               // 窗口最大值更新
                 maxLen = Math.max(maxLen, right - left + 1);
                 right++;
 
                 // 如果包含当前字符，则窗口左边界向右移动，直到不包含当前字符为止
+
             } else {
                 set.remove(s.charAt(left));
                 left++;

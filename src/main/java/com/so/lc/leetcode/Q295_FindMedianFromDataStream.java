@@ -3,7 +3,7 @@ package com.so.lc.leetcode;
 import java.util.PriorityQueue;
 
 /**
- * 描述
+ * 295. 数据流的中位数
  *
  * @author FlyHippo
  * @version 1.0
@@ -11,16 +11,17 @@ import java.util.PriorityQueue;
  **/
 
 public class Q295_FindMedianFromDataStream {
-    PriorityQueue<Integer> queMin = new PriorityQueue<Integer>((a, b) -> (b - a));;
-    PriorityQueue<Integer> queMax= new PriorityQueue<Integer>((a, b) -> (a - b));
+    PriorityQueue<Integer> queMin = new PriorityQueue<Integer>((a, b) -> (b - a));
+    ;
+    PriorityQueue<Integer> queMax = new PriorityQueue<Integer>((a, b) -> (a - b));
 
     public static void main(String[] args) {
         Q295_FindMedianFromDataStream twoHeaps = new Q295_FindMedianFromDataStream();
-       twoHeaps.addNum(5);
-       twoHeaps.addNum(4);
-       twoHeaps.addNum(3);
-       twoHeaps.addNum(2);
-       twoHeaps.addNum(1);
+        twoHeaps.addNum(5);
+        twoHeaps.addNum(4);
+        twoHeaps.addNum(3);
+        twoHeaps.addNum(2);
+        twoHeaps.addNum(1);
         System.out.println(twoHeaps);
     }
 
@@ -28,16 +29,16 @@ public class Q295_FindMedianFromDataStream {
      * queMin从小到大，顶部是小堆的最大
      * queMax从大到大，顶部是大堆的最小
      * 添加的时候，先加小堆，并且**小于中位数**后加入小堆
-     *
-     *
-     *
+     * <p>
+     * <p>
+     * <p>
      * **最关键处
      * （这里通过每次添加过后，判断大堆加1会大于等于小堆的长度）
      * 比如以5,4,3,2,1案例
      * 5先加小堆
      * 4加入时由于 4<5先加小堆，判断小堆超大堆2，则吐出小堆最大给大堆
-     * @param num
      *
+     * @param num
      */
     public void addNum(int num) {
 

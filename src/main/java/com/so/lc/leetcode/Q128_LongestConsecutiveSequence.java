@@ -47,30 +47,31 @@ public class Q128_LongestConsecutiveSequence {
      * @return 返回最长连续序列的长度
      */
     public static int longestConsecutive(int[] nums) {
-        Set<Integer> num_set = new HashSet<>();
+        Set<Integer> allNumSet = new HashSet<>();
         // 去重
         for (int num : nums) {
-            num_set.add(num);
+            allNumSet.add(num);
         }
 
-        int longestStreak = 0;
+        int longestCount = 0;
 
-        for (int num : num_set) {
-            // 不是序列的开头（包含有小1的数字） 不开始计算
-            if (!num_set.contains(num - 1)) {
+        for (int num : allNumSet) {
+            // 检测到是序列的开头（包含有小1的数字）
+            if (!allNumSet.contains(num - 1)) {
+
                 int currentNum = num;
-                int currentStreak = 1;
+                int currentCount = 1;
                 // 开始计数连续的
-                while (num_set.contains(currentNum + 1)) {
+                while (allNumSet.contains(currentNum + 1)) {
                     currentNum += 1;
-                    currentStreak += 1;
+                    currentCount += 1;
                 }
 
-                longestStreak = Math.max(longestStreak, currentStreak);
+                longestCount = Math.max(longestCount, currentCount);
             }
         }
 
-        return longestStreak;
+        return longestCount;
     }
 
     public static void main(String[] args) {

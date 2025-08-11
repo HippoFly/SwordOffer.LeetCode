@@ -26,7 +26,7 @@ import java.util.Arrays;
 public class Q283_MoveZeroes {
     public static void main(String[] args) {
         Q283_MoveZeroes moveZeroes = new Q283_MoveZeroes();
-        int[] mZeros = {0, 1, 0, 3, 12, 2, 0, 6, 7};
+        int[] mZeros = {1, 2, 0, 3};
         moveZeroes.moveZeroes(mZeros);
         System.out.println(Arrays.toString(mZeros));
     }
@@ -47,7 +47,8 @@ public class Q283_MoveZeroes {
         // 记录非零元素应该放置的位置
         int nonZeroIndex = 0;
 
-        // 第一次遍历：将非零元素依次向前覆盖，同时【记录指针】指向覆盖后一位
+        // 第一步：遍历，将非零元素依次向前覆盖，同时【记录指针】指向覆盖后一位
+        // 这个遍历中，每遇到一个非零元素，就要（先判断非 0 记录点不在本位即交换，非0记录点后移）
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] != 0) {
                 // 避免冗余赋值：只有当 i 和 nonZeroIndex 不相等时才进行赋值
@@ -58,7 +59,7 @@ public class Q283_MoveZeroes {
             }
         }
 
-        // 第二次遍历：将剩余位置填充为零
+        // 第二步：将剩余位置填充为零
         while (nonZeroIndex < nums.length) {
             nums[nonZeroIndex] = 0;
             nonZeroIndex++;

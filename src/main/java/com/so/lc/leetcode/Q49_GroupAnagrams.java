@@ -31,41 +31,34 @@ public class Q49_GroupAnagrams {
      * @return 返回一个列表的列表，其中每个内部列表都包含一组字谜字符串
      */
     public static List<List<String>> groupAnagrams(String[] strs) {
-        // 使用HashMap来存储分组结果，
-        // 其中key是字符串的哈希值，value是具有相同哈希值的字符串列表
+        // 创建一个哈希表，键是排序后的字符串，值是对应的异位词列表
         Map<String, List<String>> map = new HashMap<>();
+
+        // 遍历输入数组中的每个字符串
         for (String s : strs) {
-            // 对每个字符串计算一个唯一的哈希值，以便将字谜映射到相同的哈希值
-            String hash = getHash(s);
-            // 如果map中已经存在该哈希值作为key，则获取对应的字符串列表，并将当前字符串添加到列表中
-            if(map.containsKey(hash)) {
-                List<String> strings = map.get(hash);
-                strings.add(s);
-            } else {
-                List<String> list = new ArrayList<>();
-                list.add(s);
-                map.put(hash, list);
+            // 将字符串转换为字符数组，方便排序
+            char[] chars = s.toCharArray();
+
+            // 对字符数组进行排序，异位词排序后会得到相同的字符序列
+            Arrays.sort(chars);
+
+            // 将排序后的字符数组转换回字符串，作为哈希表的键
+            String key = new String(chars);
+
+            // 如果哈希表中还没有这个键，就创建一个新的列表
+            if (!map.containsKey(key)) {
+                map.put(key, new ArrayList<>());
             }
+
+            // 将当前字符串添加到对应键的列表中
+            map.get(key).add(s);
         }
+
+        // 将哈希表中的所有值(即分组后的异位词列表)转换为List返回
         return new ArrayList<>(map.values());
     }
 
-    /**
-     * 计算字符串的哈希值
-     * 该方法通过对字符串中的每个字符进行排序来生成一个唯一的哈希值
-     * 这样，所有字谜字符串将生成相同的哈希值
-     *
-     * @param string 输入的字符串
-     * @return 返回字符串的哈希值
-     */
-    public static String getHash(String string) {
-        int[] hashArray = new int[26];
-        for (int i = 0; i < string.length(); i++) {
-            hashArray[string.charAt(i) - 'a']++;
-        }
-        String string1 = Arrays.toString(hashArray);
-        return string1;
-    }
+
 
     public List<List<String>> groupAnagrams2(String[] strs) {
         return new ArrayList<>(Arrays.stream(strs)
@@ -86,7 +79,7 @@ public class Q49_GroupAnagrams {
 
         // 打印每个字符串的哈希值
         for (String str : testStrings) {
-            System.out.println("String: " + str + " -> Hash: " + getHash(str));
+            System.out.println("String: " + str + " -> Hash: " );
         }
 
         // 使用 groupAnagrams 方法对字符串数组进行分组

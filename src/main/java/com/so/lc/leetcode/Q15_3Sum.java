@@ -39,7 +39,7 @@ import java.util.List;
  **/
 public class Q15_3Sum {
     public static void main(String[] args) {
-        int[] nums = new int[]{-1, 0, 1, 2, -1, -4,-2};
+        int[] nums = new int[]{-1, 0, 1, 2, -1, -4, -2};
         System.out.println(threeSum(nums));
     }
 
@@ -49,49 +49,34 @@ public class Q15_3Sum {
             return new ArrayList<>();
         }
 
+        // 结果放在 list
         List<List<Integer>> result = new ArrayList<>();
         Arrays.sort(nums); // 排序后的数组是升序的
 
         for (int i = 0; i < nums.length - 2; i++) {
-            // 数组是递增的，如果当前数字大于0，则后面的数字肯定大于0，结束循环
-            // 这里i为了避免重复运算只进行小于等于0的部分
-            if (nums[i] > 0) {
-                break;
-            }
+            // 如果当前数字大于 0，则三数之和一定大于 0，所以结束循环
+            if (nums[i] > 0) break;
+            // 去重
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
 
-            // 跳过重复的数字
-            if (i > 0 && nums[i] == nums[i - 1]) {
-                continue;
-            }
-
-            int start = i + 1; // 左指针，从当前数字的下一个开始
-            int end = nums.length - 1; // 右指针，固定最后一个数字
-
-            // 针对每一个i取值，移动左右指针
-            while (start < end) {
-                // 当前i时候用来确定三个数字的和
-                int sum = nums[i] + nums[start] + nums[end];
-                // 符合sum 为 0
+            int left = i + 1, right = nums.length - 1;
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
                 if (sum == 0) {
-                    // 添加结果，并继续移动指针
-                    result.add(Arrays.asList(nums[i], nums[start], nums[end]));
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
 
-                    // （确保左指针在右指针左边时）跳过重复的数字
-                    while (start < end && nums[start] == nums[start + 1]) {
-                        start++;
-                    }
-                    while (start < end && nums[end] == nums[end - 1]) {
-                        end--;
-                    }
-                    // 移动指针
-                    start++;
-                    end--;
-                    // sum 小于 0，扩大左边指针增大总和
+                    // 左指针重复则左++
+                    while (left < right && nums[left] == nums[left + 1]) left++;
+                    // 右指针重复则右--
+                    while (left < right && nums[right] == nums[right - 1]) right--;
+
+                    // 指针向中间移动
+                    left++;
+                    right--;
                 } else if (sum < 0) {
-                    start++;
-                    //sum 大于 0，缩小右边指针减小总和
+                    left++;
                 } else {
-                    end--; // 减小总和
+                    right--;
                 }
             }
         }

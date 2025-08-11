@@ -1,6 +1,7 @@
 package com.so.lc.leetcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,69 +40,58 @@ public class Q438_AnagramsInString {
      * @param target 模板字符串
      * @return 符合的数组
      */
+    /**
+     * 简化版滑动窗口解法
+     *
+     * @param sample 样本字符串
+     * @param target 模板字符串
+     * @return 符合的数组
+     */
     public List<Integer> findAnagrams(String sample, String target) {
-        // 输入校验
         if (sample == null || target == null) {
             throw new IllegalArgumentException("Input strings must not be null");
         }
 
         int sampleLen = sample.length(), targetLen = target.length();
-
-        // 边界条件处理
         if (sampleLen < targetLen || targetLen == 0) {
             return new ArrayList<>();
         }
-
+        // 初始化样本哈希表
         List<Integer> answer = new ArrayList<>();
         int[] sampleHash = new int[26];
         int[] targetHash = new int[26];
 
-        // 初始化目标哈希表，统计目标字符串中每个字母的出现次数
+        // 初始化目标哈希表
         for (int i = 0; i < targetLen; ++i) {
-            ++sampleHash[sample.charAt(i) - 'a'];
             ++targetHash[target.charAt(i) - 'a'];
         }
 
-        // 使用差异字符计数优化性能
-        diffCount = 0;
-        for (int i = 0; i < 26; ++i) {
-            if (sampleHash[i] != targetHash[i]) {
-                diffCount++;
-            }
-        }
-
-        // 判断初始窗口是否匹配
-        if (diffCount == 0) {
-            answer.add(0);
-        }
-
         // 滑动窗口
-        for (int i = 0; i < sampleLen - targetLen; ++i) {
-            // 依次从sample左到右移动，取出单个字符，对比字符哈希
-            // 左字符哈希数组索引
-            int leftCharIndex = sample.charAt(i) - 'a';
-            // 加上sample长度的右字符
-            int rightCharIndex = sample.charAt(i + targetLen) - 'a';
+        for (int i = 0; i < sampleLen; ++i) {
+            // 添加当前字符到窗口中
+            ++sampleHash[sample.charAt(i) - 'a'];
 
-            // 更新窗口左端字符  （窗口左移除1，从数组第leftCharIndex个减去左字符的1一个字符）
-            updateCharacterCount(sampleHash, leftCharIndex, -1, targetHash);
-            // 更新窗口右端字符  （窗口右加一，）
-            updateCharacterCount(sampleHash, rightCharIndex, 1, targetHash);
+            // 如果窗口大小超过目标字符串长度，移除最左边的字符
+            if (i >= targetLen) {
+                --sampleHash[sample.charAt(i - targetLen) - 'a'];
+            }
 
-            // 如果差异字符数为0，说明当前窗口匹配
-            if (diffCount == 0) {
-                answer.add(i + 1);
+            // 比较两个哈希表是否相等
+            if (Arrays.equals(sampleHash, targetHash)) {
+                answer.add(i - targetLen + 1);
             }
         }
 
         return answer;
     }
 
+
     /**
      * 更新字符计数并调整差异字符计数
+     *
      * @param sampleHash 样本字符哈希表
-     * @param charIndex 字符索引
-     * @param increment 增量（+1 或 -1）
+     * @param charIndex  字符索引
+     * @param increment  增量（+1 或 -1）
      * @param targetHash 目标字符哈希表
      */
     private void updateCharacterCount(int[] sampleHash, int charIndex, int increment, int[] targetHash) {

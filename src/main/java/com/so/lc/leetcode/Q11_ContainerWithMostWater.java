@@ -14,15 +14,26 @@ package com.so.lc.leetcode;
  **/
 
 public class Q11_ContainerWithMostWater {
+
+    /**
+     * 1. 左右指针分别在数组首尾
+     * 2. 计算当前面积，更新最大值
+     * 3. 移动较短边的指针（关键）
+     * 4. 重复直到指针相遇
+     *
+     * @param height
+     * @return
+     */
     public int maxArea(int[] height) {
-        // 初始化最大面积为0，左右指针分别指向数组的两端
+        // 初始化
         int ans = 0, left = 0, right = height.length - 1;
-        // 当左指针小于右指针时，进行循环
+        // 当左指针小于右指针时，进循环
         while (left < right) {
-            // 计算当前左右指针指向的点形成的面积
+            // 计算当前指针面积
             int area = (right - left) * Math.min(height[left], height[right]);
             ans = Math.max(ans, area);
-            // 如果左边的点高度小于右边的点高度，则将左边的指针向右移动一位，反之亦然
+
+            // 矮边内移
             if (height[left] < height[right]) {
                 ++left;
             } else {

@@ -31,19 +31,40 @@ import java.util.LinkedList;
  **/
 
 public class Q189_RotateArray {
-   // 解法1:利用集合LinkedList的特点
     public void rotate(int[] nums, int k) {
-        LinkedList<Integer> list = new LinkedList<>();
-        for (int num : nums) {
-            list.add(num);
+        // 边界 1：长度为 0 或 1，不需要旋转
+        if (nums.length <= 1) {
+            return;
         }
-        // 处理 k 大于 n 的情况
-        k = k % nums.length;
-        for (int i = 0; i < k; i++) {
-            list.addFirst(list.removeLast());
+
+        // 边界 2：k 大于数组长度的情况，不需要旋转
+        int n = nums.length;
+        k = k % n;
+        if (k == 0) {
+            return;
         }
-        for (int i = 0; i < nums.length; i++) {
-            nums[i] = list.get(i);
+
+        // 第二步：反转整个数组
+        reverseArray(nums, 0, n - 1);
+
+        // 第三步：反转前 k 个元素
+        reverseArray(nums, 0, k - 1);
+
+        // 第四步：反转后 n-k 个元素
+        reverseArray(nums, k, n - 1);
+    }
+
+    /**
+     * 反转数组中从 left 到 right 的部分（包含 left 和 right）
+     * 使用两个指针从两端向中间交换元素
+     */
+    private void reverseArray(int[] nums, int left, int right) {
+        while (left < right) {
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+            left++;
+            right--;
         }
     }
 

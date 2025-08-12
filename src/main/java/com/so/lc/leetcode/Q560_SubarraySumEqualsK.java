@@ -1,5 +1,7 @@
 package com.so.lc.leetcode;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 560. 和为 K 的子数组
@@ -27,25 +29,21 @@ import java.util.Arrays;
  **/
 
 public class Q560_SubarraySumEqualsK {
+
     public int subarraySum(int[] nums, int k) {
         // 创建一个前缀和数组，长度为 nums.length + 1，这里多出来的1是为了空子数组
-        // 比如[1,2,3] K=要计算[1,2]
         int[] preSum = new int[nums.length + 1];
-        // 统计符合个数
         int count = 0;
 
         // 计算前缀和数组
         for (int i = 0; i < nums.length; i++) {
-            // preSum[i+1] 表示从 nums[0] 到 nums[i] 的元素和
             preSum[i + 1] = nums[i] + preSum[i];
         }
 
-        // 遍历所有可能的子数组
-        // 双重循环是为了遍历 被减数 和 减数
+        // 双重循环：这里很暴力，preSum[i] 代表前 i 个元素和，在定住一个 i 下，j 从 i 开始，
+        //          会计算出对比前 i 个元素差 1 个，差 2 个，差 3 个，依次类推，
         for (int i = 0; i < nums.length; i++) {
             for (int j = i; j < nums.length; j++) {
-                // 计算子数组 nums[i] 到 nums[j] 的和
-                // preSum[j+1] - preSum[i] 表示从 nums[i] 到 nums[j] 的元素和
 
                 if (preSum[j + 1] - preSum[i] == k) {
                     // 如果子数组的和等于 k，则计数器加 1

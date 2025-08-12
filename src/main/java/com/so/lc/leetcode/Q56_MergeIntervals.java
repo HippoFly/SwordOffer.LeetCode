@@ -40,7 +40,7 @@ public class Q56_MergeIntervals {
 
         // 第二步：初始化
 
-        // 创建一个结果列表来存储合并后的区间
+        // 结果列表
         List<int[]> merged = new ArrayList<>();
         // 初始化第一个区间为当前区间
         int[] currentInterval = intervals[0];
@@ -57,6 +57,8 @@ public class Q56_MergeIntervals {
                 // 如果重叠，更新当前区间的结束位置为两者最大值
                 currentInterval[1] = Math.max(currentInterval[1], nextInterval[1]);
                 // 这里对currentInterval已经加入结果，只管吞大
+
+
                 // 只到下一个for循环更新nextInterval，看是否继续吞Max
 
 

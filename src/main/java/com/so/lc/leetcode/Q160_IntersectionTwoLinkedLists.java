@@ -15,32 +15,29 @@ import com.so.common.ListNode;
 public class Q160_IntersectionTwoLinkedLists {
 
     /**
-     * 解决这个问题的关键是找到两个链表长度的差值，然后让较长的链表先走几步，直到两个链表剩下的长度一样
-     * 这样就可以同时遍历两个链表，找到交点
-     * 如果没有交点，两个指针最终都会变成null，循环结束，返回null
+     * 解决这个问题的关键是拼接
+     * 相交，一起走到交点
+     * 不相交，一起走到末尾null
      *
      * @param headA 第一个链表的头节点
      * @param headB 第二个链表的头节点
      * @return 返回两个链表的交点节点，如果没有交点，则返回null
      */
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        // 检查输入的链表头节点是否为空
+        // 边界判断
         if (headA == null || headB == null) return null;
 
         // 生成两个指针，分别指向两个链表的头节点
         ListNode pA = headA, pB = headB;
 
-        // 进入一个循环，只有当 pA 和 pB 指向同一个节点时才退出循环，即找到了交点或者遍历到链表末尾（没有交点）。
-        // 这里有一个默认条件：每一个链表最后都是null，那么即使俩链表没有交点，最后第二轮会同时到null
+        // 结束循环： 相交 -> 拼接后走到相交点  不相交 -> 拼接后走到末尾null 一起结束
         while (pA != pB) {
-            // 如果 pA 到达链表末尾，则将其重定位到 headB
             if (pA == null) {
                 pA = headB;
             } else {
                 pA = pA.next;
             }
 
-            // 如果 pB 到达链表末尾，则将其重定位到 headA
             if (pB == null) {
                 pB = headA;
             } else {
@@ -48,49 +45,44 @@ public class Q160_IntersectionTwoLinkedLists {
             }
         }
 
-        // 如果找到了交点，pA和pB会指向同一个节点；如果没有交点，pA和pB最终都会变成null
-        // 返回pA或pB都可以，因为它们指向的是同一个节点
         return pA;
     }
 
     public static void main(String[] args) {
-        // Create nodes for listA
-        ListNode node1 = new ListNode(4);
-        ListNode node2 = new ListNode(1);
-        ListNode node3 = new ListNode(8);
-        ListNode node4 = new ListNode(4);
-        ListNode node5 = new ListNode(5);
 
-        // Connect nodes for listA
-        node1.next = node2;
-        node2.next = node3;
-        node3.next = node4;
-        node4.next = node5;
-
-        // Create nodes for listB
-        ListNode node6 = new ListNode(5);
-        ListNode node7 = new ListNode(6);
-        ListNode node8 = new ListNode(1);
-
-        // Connect nodes for listB
-        node6.next = node7;
-        node7.next = node8;
-        node8.next = node3; // Connect to intersecting node in listA
-
-        // Test intersection
-        ListNode headA = node1;
-        ListNode headB = node6;
 
 
         Q160_IntersectionTwoLinkedLists twoLinkedLists = new Q160_IntersectionTwoLinkedLists();
-        ListNode intersectionNode = twoLinkedLists.getIntersectionNode(headA, headB);
-        System.out.println(intersectionNode);
 
-        // Print the result
-        if (intersectionNode != null) {
-            System.out.println("Intersection node value: " + intersectionNode.val);
+
+        // Create non-intersecting lists: 1->2->3 and 4->5->6
+        ListNode node10 = new ListNode(1);
+        ListNode node11 = new ListNode(2);
+        ListNode node12 = new ListNode(3);
+
+        ListNode node13 = new ListNode(4);
+        ListNode node14 = new ListNode(5);
+        ListNode node15 = new ListNode(6);
+        ListNode node16 = new ListNode(7);
+
+        node10.next = node11;
+        node11.next = node12;
+
+        node13.next = node14;
+        node14.next = node15;
+        node15.next = node16;
+
+        // Test non-intersection
+        ListNode headC = node10;
+        ListNode headD = node13;
+
+        ListNode nonIntersectionNode = twoLinkedLists.getIntersectionNode(headC, headD);
+        System.out.println(nonIntersectionNode);
+
+        if (nonIntersectionNode != null) {
+            System.out.println("Intersection node value: " + nonIntersectionNode.val);
         } else {
-            System.out.println("No intersection found.");
+            System.out.println("No intersection found for non-intersecting lists.");
         }
     }
 }

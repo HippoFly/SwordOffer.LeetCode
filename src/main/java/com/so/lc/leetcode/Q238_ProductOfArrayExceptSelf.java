@@ -9,12 +9,12 @@ import java.util.Arrays;
  * 请 不要使用除法，且在 O(n) 时间复杂度内完成此题。
  * <p>
  * 示例 1:
- *
+ * <p>
  * 输入: nums = [1,2,3,4]
  * 输出: [24,12,8,6]
  * <p>
  * 示例 2:
- *
+ * <p>
  * 输入: nums = [-1,1,0,-3,3]
  * 输出: [0,0,9,0,0]
  *
@@ -26,21 +26,34 @@ import java.util.Arrays;
 
 public class Q238_ProductOfArrayExceptSelf {
     // 解法1:利用LinkedList的特性调用APi解决
+
+    /**
+     * 一个位置的乘积 = 它左边所有数的乘积 × 它右边所有数的乘积
+     * <p>
+     * 所以我们分两步：
+     * <p>
+     * 先算左边乘积：从左到右，让 output[i] 存储 nums[i] 左边所有数的乘积。
+     * <p>
+     * 再乘右边乘积：从右到左，用一个临时变量 rightProduct 记录右边的乘积，边走边更新 output[i]。
+     *
+     * @param nums
+     * @return
+     */
     public int[] productExceptSelf(int[] nums) {
         int n = nums.length;
         int[] output = new int[n];
 
-        // 计算每个元素左侧所有元素的乘积并存储在 output 中
-        output[0] = 1;
+        // Step 1: 左边乘积
+        output[0] = 1; // 第一个元素左边没有数，所以是 1
         for (int i = 1; i < n; i++) {
-            output[i] = output[i - 1] * nums[i - 1];
+            output[i] = output[i - 1] * nums[i - 1]; //这里 nums 从 i-1 开始，比如 1 号位左边的 0 号就想通了
         }
 
-        // 计算右侧乘积并直接更新 output
-        int rightProduct = 1;
+        // Step 2: 右边乘积并直接更新
+        int rightProduct = 1; // 最右边没有数，所以是 1
         for (int i = n - 1; i >= 0; i--) {
-            output[i] *= rightProduct;
-            rightProduct *= nums[i];
+            output[i] =  output[i] * rightProduct; // 左乘 × 右乘
+            rightProduct = rightProduct * nums[i];   // 更新右边乘积
         }
 
         return output;

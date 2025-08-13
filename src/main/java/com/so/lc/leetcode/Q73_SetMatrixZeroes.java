@@ -16,100 +16,45 @@ import java.util.Set;
 
 public class Q73_SetMatrixZeroes {
 
+
     /**
-     * 额外空间记录零位置(不符合要求)
      * 思路：
-     * 1. 遍历矩阵，将所有0所在的行和列记录下来
-     * 2. 再次遍历矩阵，如果该行或列包含0，则置为0
+     * 1. 创建两个布尔数组，分别记录哪些行、哪些列需要置零
+     * 2. 第一次遍历：记录哪些行、哪些列需要置零
+     * 3. 第二次遍历：根据标记置零
      *
+     *
+     *
+     * 面试官可能要求减少空间占用，这个时候记得，需要额外标志位记录首行 首列 是否清零，然后首行首列自身继续对行列统计
      * @param matrix
      */
     public void setZeroes(int[][] matrix) {
-        Set<Integer> row_zero = new HashSet<>();
-        Set<Integer> col_zero = new HashSet<>();
-        int row = matrix.length;
-        int col = matrix[0].length;
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        boolean[] rowHasZero = new boolean[m];
+        boolean[] colHasZero = new boolean[n];
+
+        // 第一次遍历：记录哪些行、哪些列需要置零
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 if (matrix[i][j] == 0) {
-                    row_zero.add(i);
-                    col_zero.add(j);
+                    rowHasZero[i] = true;
+                    colHasZero[j] = true;
                 }
             }
         }
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                if (row_zero.contains(i) || col_zero.contains(j)) {
+
+        // 第二次遍历：根据标记置零
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (rowHasZero[i] || colHasZero[j]) {
                     matrix[i][j] = 0;
                 }
             }
         }
     }
 
-    /**
-     * 首行列标记法
-     * 第一步，用标志符号记录第一行第一列是否为0
-     * 第二步，再用第一行列标记内部置零
-     * 第三步，根据第一行列直0
-     * 第四步，对第一行列置零
-     *
-     * @param matrix
-     */
-    public void setZeroes2(int[][] matrix) {
-        int row = matrix.length;
-        int col = matrix[0].length;
-
-        // 检查第一行是否包含0
-        boolean firstRowZero = false;
-        for (int j = 0; j < col; j++) {
-            if (matrix[0][j] == 0) {
-                firstRowZero = true;
-                break;
-            }
-        }
-
-        // 检查第一列是否包含0
-        boolean firstColZero = false;
-        for (int i = 0; i < row; i++) {
-            if (matrix[i][0] == 0) {
-                firstColZero = true;
-                break;
-            }
-        }
-
-        // 标记需要置零的行和列
-        for (int i = 1; i < row; i++) {
-            for (int j = 1; j < col; j++) {
-                if (matrix[i][j] == 0) {
-                    matrix[i][0] = 0;
-                    matrix[0][j] = 0;
-                }
-            }
-        }
-
-        // 根据标记将矩阵置零
-        for (int i = 1; i < row; i++) {
-            for (int j = 1; j < col; j++) {
-                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
-                    matrix[i][j] = 0;
-                }
-            }
-        }
-
-        // 处理第一行
-        if (firstRowZero) {
-            for (int j = 0; j < col; j++) {
-                matrix[0][j] = 0;
-            }
-        }
-
-        // 处理第一列
-        if (firstColZero) {
-            for (int i = 0; i < row; i++) {
-                matrix[i][0] = 0;
-            }
-        }
-    }
 
     public static void main(String[] args) {
         Q73_SetMatrixZeroes solution = new Q73_SetMatrixZeroes();
@@ -118,7 +63,7 @@ public class Q73_SetMatrixZeroes {
                 {1, 0, 1},
                 {1, 1, 1}
         };
-        solution.setZeroes2(matrix);
+        solution.setZeroes(matrix);
         for (int[] row : matrix) {
             for (int val : row) {
                 System.out.print(val + " ");

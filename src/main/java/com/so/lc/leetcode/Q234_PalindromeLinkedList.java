@@ -21,6 +21,9 @@ public class Q234_PalindromeLinkedList {
 
     /**
      * 遍历+双指针
+     *
+     * 链表转化为数组，方便双指针到内对比
+     *
      * @param head
      * @return
      */

@@ -34,10 +34,10 @@ public class Q206_ReverseLinkedList {
         // 后
         ListNode next = null;
         while (curr != null) {
-            //先指针指向下一节点，记录下载，防止断连
+            //next指针指向curr下一节点，记录下载，防止断连
             next = curr.next;
 
-            // 指针反转前
+            // curr指针反转
             curr.next = prev;
 
             // 前指针指向当前解答

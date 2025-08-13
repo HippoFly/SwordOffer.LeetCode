@@ -23,10 +23,11 @@ public class Q240_Search2DMatrixII {
      * @return 如果找到目标值，则返回true；否则返回false
      */
     public boolean searchMatrix(int[][] matrix, int target) {
-        // 获取矩阵的行数
+
         int length = matrix.length ;
-        // 初始化搜索的起始位置为矩阵的右上角
+        // 搜索的起始位置为矩阵的右上角
         int x = 0, y = matrix[0].length - 1;
+
         // 当前行数小于矩阵总行数且当前列数不小于0时，继续搜索
         while (x < length && y >= 0) {
             // 如果当前元素等于目标值，返回true

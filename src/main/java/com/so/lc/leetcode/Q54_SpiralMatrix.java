@@ -28,52 +28,52 @@ import java.util.List;
 
 public class Q54_SpiralMatrix {
 
+    /**
+     *
+     *
+     * @param matrix
+     * @return
+     */
     public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> arr = new ArrayList<>();
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-            return arr;
+        List<Integer> res = new ArrayList<>();
+        if (matrix == null || matrix.length == 0) return res;
+
+        int top = 0;
+        int bottom = matrix.length - 1;
+        int left = 0;
+        int right = matrix[0].length - 1;
+
+        while (top <= bottom && left <= right) {
+            // 上边
+            for (int j = left; j <= right; j++) {
+                res.add(matrix[top][j]);
+            }
+            top++;
+
+            // 右边
+            for (int i = top; i <= bottom; i++) {
+                res.add(matrix[i][right]);
+            }
+            right--;
+
+            // 下边
+            if (top <= bottom) {
+                for (int j = right; j >= left; j--) {
+                    res.add(matrix[bottom][j]);
+                }
+                bottom--;
+            }
+
+            // 左边
+            if (left <= right) {
+                for (int i = bottom; i >= top; i--) {
+                    res.add(matrix[i][left]);
+                }
+                left++;
+            }
         }
 
-        // 左右边界
-        int leftBorder = 0, rightBorder = matrix[0].length - 1;
-        // 上下边界
-        int topBorder = 0, downBorder = matrix.length - 1;
-        /*
-        *   （0,0） ——> (0,n)
-        *      ⬇️
-        *    (n,0)
-        * */
-
-        while (leftBorder <= rightBorder && topBorder <= downBorder) {
-            // 从左到右遍历上边界
-            for (int i = leftBorder; i <= rightBorder; i++) {
-                arr.add(matrix[topBorder][i]);
-            }
-            topBorder++;
-
-            // 从上到下遍历右边界
-            for (int i = topBorder; i <= downBorder; i++) {
-                arr.add(matrix[i][rightBorder]);
-            }
-            rightBorder--;
-
-            // 从右到左遍历下边界
-            if (topBorder <= downBorder) {
-                for (int i = rightBorder; i >= leftBorder; i--) {
-                    arr.add(matrix[downBorder][i]);
-                }
-                downBorder--;
-            }
-
-            // 从下到上遍历左边界
-            if (leftBorder <= rightBorder) {
-                for (int i = downBorder; i >= topBorder; i--) {
-                    arr.add(matrix[i][leftBorder]);
-                }
-                leftBorder++;
-            }
-        }
-        return arr;
+        return res;
     }
 
     public static void main(String[] args) {

@@ -16,22 +16,30 @@ package com.so.lc.leetcode;
 
 public class Q48_RotateImage {
     public void rotate(int[][] matrix) {
-        int n = matrix.length;
-        // 水平翻转 横轴对称一般，竖轴全覆盖
-        for (int i = 0; i < n / 2; ++i) {
-            for (int j = 0; j < n; ++j) {
-                int temp = matrix[i][j];
-                matrix[i][j] = matrix[n - i - 1][j];
-                matrix[n - i - 1][j] = temp;
+        int size = matrix.length;
+
+        // Step 1: 上下翻转（沿水平中线对称）
+        // 把最上面的一行和最下面的一行互换
+        // 把第二行和倒数第二行互换……
+        for (int rowTop = 0; rowTop < size / 2; rowTop++) {
+            int rowBottom = size - 1 - rowTop;
+            for (int column = 0; column < size; column++) {
+                int temporaryValue = matrix[rowTop][column];
+                matrix[rowTop][column] = matrix[rowBottom][column];
+                matrix[rowBottom][column] = temporaryValue;
             }
         }
-        // 主对角线翻转
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                int temp = matrix[i][j];
-                matrix[i][j] = matrix[j][i];
-                matrix[j][i] = temp;
+
+        // Step 2: 主对角线翻转（沿左上到右下的对角线对称）
+        // 把矩阵的行和列交换，等于围绕主对角线“折叠”一次
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < row; column++) {
+                int temporaryValue = matrix[row][column];
+                matrix[row][column] = matrix[column][row];
+                matrix[column][row] = temporaryValue;
             }
         }
     }
+
+
 }

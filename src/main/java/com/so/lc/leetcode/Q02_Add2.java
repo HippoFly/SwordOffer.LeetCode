@@ -24,10 +24,10 @@ public class Q02_Add2 {
      * 思路：
      * 1. 创建一个虚拟头节点，用于返回合并后的链表。
      * 2. 初始化当前节点为虚拟头节点，初始 carry 为 0。
-     * 3. 遍历两个链表，直到其中一个为空。
-     * 4. 计算当前位的值和新的 carry。
-     * 5. 创建新节点并连接到 current，更新 current。
-     * 6. 如果最后还有进位，添加一个新节点。
+     * 3. 循环：遍历两个链表，直到全为空。
+     *      3.1. 对 左右 当前节点求和，分别取下一点
+     *      3.2. 创建新节点并连接到 current，更新 current。
+     *  4. 如果最后还有进位，添加一个新节点。
      * 7. 返回合并后的链表的头节点。**/
     public ListNode addTwoNumbers(ListNode list1, ListNode list2) {
         // 创建一个虚拟头节点
@@ -35,7 +35,7 @@ public class Q02_Add2 {
         ListNode current = dummy;
         int carry = 0;
 
-        // 遍历两个链表，直到其中一个为空
+        // 遍历两个链表，直到两个全为 null
         // 注意这里的条件，只要一个不为空，就继续循环，结合内部if判断就可以即使一个链表远远长于另一个也可以处理完毕
         while (list1 != null || list2 != null) {
             // 每次循环都要初始化 sum 并且加上一次的进位

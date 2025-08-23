@@ -13,13 +13,25 @@ import com.so.common.TreeNode;
  **/
 public class Q101_SymmetricTree {
     public boolean isSymmetric(TreeNode root) {
-        boolean result = true;
         if (root == null){
             return true;
         }
         return isSymmetric(root.left, root.right);
     }
 
+    /**
+     * 递归检查两个节点是否对称
+     * 1. 检查两个节点是否都为空  false 终止
+     * 2. 检查任意一个节点为空  false 终止
+     * 3. 检查当前节点的值是否相等   true 其一
+     * 4. 递归检查左子树和右子树是否对称
+     *    a.左的左和右的右 true 其一
+     *    b.左的右和右的左 true 其一
+     * 5. 返回3个 true 判断的逻辑与
+     * @param left
+     * @param right
+     * @return
+     */
     boolean isSymmetric(TreeNode left, TreeNode right) {
         // 检查两个节点是否都为空
         if (left == null && right == null) {

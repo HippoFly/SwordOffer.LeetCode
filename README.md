@@ -1,11 +1,6 @@
-
-
 ## LeetCode
 
 ### 按照数据结构
-
-
-
 
 | 数据结构 | 题型 | 题目                                                         |
 | -------- | ---- | ------------------------------------------------------------ |
@@ -19,11 +14,32 @@
 |          |      | [437. 路径总和 III](src/main/java/com/so/leetcode/Q437_PathSumIII.java)<br /> |
 |          | 重构 | [105.  从前序与中序遍历序列构造二叉树](src/main/java/com/so/leetcode/Q105_ConstructBinaryTreeFromPreorderInorder.java)<br /> |
 |          |      | [108. 将有序数组转换为二叉搜索树](src/main/java/com/so/leetcode/Q108_ConvertSortedArray2BinarySearchTree.java)<br /> |
+| 链表     | 基本操作 | [2. 两数相加](src/main/java/com/so/leetcode/Q02_Add2.java)<br /> |
+|          |      | [138. 复制带随机指针的链表](src/main/java/com/so/leetcode/Q138_CopyListWithRandomPointer.java)<br /> |
+|          |      | [141. 环形链表](src/main/java/com/so/leetcode/Q141_LinkedListCycle.java)<br /> |
+|          |      | [142. 环形链表 II](src/main/java/com/so/leetcode/Q142_LinkedListCycle.java)<br /> |
 |          |      |                                                              |
+| 数组     | 双指针 | [11. 盛最多水的容器](src/main/java/com/so/leetcode/Q11_ContainerWithMostWater.java)<br /> |
+|          |      | [128. 最长连续序列](src/main/java/com/so/leetcode/Q128_LongestConsecutiveSequence.java)<br /> |
+|          |      | [121. 买卖股票的最佳时机](src/main/java/com/so/leetcode/Q121_BuyAndSellStock.java)<br /> |
 |          |      |                                                              |
-
-
-
+| 字符串   | 滑动窗口 | [3. 无重复字符的最长子串](src/main/java/com/so/leetcode/Q03_LongestSubstringWithoutRepeatingCharacters.java)<br /> |
+|          |      | [5. 最长回文子串](src/main/java/com/so/leetcode/Q05_LongestPalindromicSubstring.java)<br /> |
+|          |      |                                                              |
+| 图       | DFS/BFS | [131. 分割回文串](src/main/java/com/so/leetcode/Q131_PalindromePartitioning.java)<br /> |
+|          |      | [139. 单词拆分](src/main/java/com/so/leetcode/Q139_WordBreak.java)<br /> |
+|          |      |                                                              |
+| 动态规划 |      | [1143. 最长公共子序列](src/main/java/com/so/leetcode/Q1143_LongestCommonSubsequence.java)<br /> |
+|          |      | [124. 二叉树中的最大路径和](src/main/java/com/so/leetcode/Q124_MaximumPathSum.java)<br /> |
+|          |      |                                                              |
+| 哈希表   |      | [1. 两数之和](src/main/java/com/so/leetcode/Q01_TwoSum.java)<br /> |
+|          |      | [136. 只出现一次的数字](src/main/java/com/so/leetcode/Q136_SingleNumber.java)<br /> |
+|          |      |                                                              |
+| 栈和队列 |      | [102. 二叉树的层序遍历](src/main/java/com/so/leetcode/Q102_BinaryTreeLevelOrderTraversal.java)<br /> |
+|          |      | [104. 二叉树的最大深度](src/main/java/com/so/leetcode/Q104_MaxDepthOfBinaryTree.java)<br /> |
+|          |      |                                                              |
+| 递归     |      | [101. 对称二叉树](src/main/java/com/so/leetcode/Q101_SymmetricTree.java)<br /> |
+|          |      |                                                              |
 
 ## 《剑指offer》Java版代码
 ![封面图片](https://img-blog.csdnimg.cn/201906290844352.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JhaXllX3hpbmc=,size_16,color_FFFFFF,t_70)

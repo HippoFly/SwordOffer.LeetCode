@@ -30,25 +30,21 @@ public class Q24_SwapNodesInPairs {
      * @return 交换后的链表头节点
      */
     public ListNode swapPairs(ListNode head) {
-        // 如果链表为空，或者只有一个节点，无需交换，直接返回原链表头节点
+        // 终止条件
         if (head == null || head.next == null) {
             return head;
         }
 
-        // 'next' 指向当前节点的下一个节点，即即将成为新头部的节点
-        ListNode next = head.next;
+        // 记录第二个节点
+        ListNode newHead = head.next;
+        // 第一个节点指向后续递归处理结果
+        head.next = swapPairs(newHead.next);
+        // 第二个节点指向第一个节点
+        newHead.next = head;
 
-        // 递归地对 'next.next' 开始的后续链表进行相同的操作
-        // 此步骤会返回交换后的新链表头，该头节点将成为当前 'next' 节点的新后继
-        head.next = swapPairs(next.next);
-
-        // 完成交换：原链表的头节点 'head' 变为当前 'next' 节点的后继节点，
-        // 而 'next' 节点则成为新链表的头节点
-        next.next = head;
-
-        // 返回交换后链表的新头部
-        return next;
+        return newHead;
     }
+
 
     public static void main(String[] args) {
         // 创建测试链表 1 -> 2 -> 3 -> 4 -> 5

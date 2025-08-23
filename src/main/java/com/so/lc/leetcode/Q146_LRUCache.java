@@ -20,23 +20,9 @@ import java.util.Map;
 
 public class Q146_LRUCache {
 
-    public static void main(String[] args) {
-        Q146_LRUCache lruCache = new Q146_LRUCache(3);
-        lruCache.put(1, 1);
-        lruCache.put(2, 2);
-        System.out.println(lruCache.get(1)); // 返回 1
-        lruCache.put(3, 3); // 该操作会使得关键字 2 作废
-        System.out.println(lruCache.get(2)); // 返回 -1 (未找到)
-        lruCache.put(4, 4); // 该操作会使得关键字 1 作废
-        System.out.println(lruCache.get(1)); // 返回 -1 (未找到)
-        System.out.println(lruCache.get(3)); // 返回 3
-        System.out.println(lruCache.get(4)); // 返回 4
-
-    }
-
     LinkedHashMap<Integer, Integer> cache ;
-    Integer cap = 0;
 
+    Integer cap = 0;
     public Q146_LRUCache(int capacity) {
         cap = capacity;
         //使用 LinkedHashMap 的构造函数，参数 (capacity, 1.0F, true) 表示按访问顺序排序。
@@ -63,5 +49,54 @@ public class Q146_LRUCache {
 
     public void put(int key, int value) {
         cache.put(key, value);
+    }
+
+    /**
+     * 1. 为什么需要两种数据结构？
+     * HashMap：存放 key → 节点 的映射，保证 get/put 查找是 O(1)。
+     * 双向链表：存放缓存的实际数据，维护 使用顺序：
+     * 链表头：最近使用的节点（Most Recently Used）
+     * 链表尾：最久未使用的节点（Least Recently Used）
+     * 当容量满时，要删除尾节点
+     * 这样一组合，就能同时满足：
+     *
+     * O(1) 查找
+     *
+     * O(1) 插入、删除、移动节点
+     *
+     * 🔹2. 关键操作
+     *
+     * get(key)
+     * 如果不存在，返回 -1
+     * 如果存在：
+     * 从 HashMap 拿到节点
+     * 把该节点移动到链表头（最近使用）
+     * 返回值
+     *
+     * put(key, value)
+     * 如果 key 已存在：
+     * 更新值
+     * 移动到链表头
+     *
+     * 如果 key 不存在：
+     * 新建节点，插入到链表头
+     * 如果超过容量：
+     *
+     * 删除链表尾节点（最久未使用的）
+     * 同时在 HashMap 里删除
+     * @param args
+     */
+    public static void main(String[] args) {
+        Q146_LRUCache lruCache = new Q146_LRUCache(3);
+        lruCache.put(1, 1);
+        lruCache.put(2, 2);
+        System.out.println(lruCache.get(1)); // 返回 1
+        lruCache.put(3, 3); // 该操作会使得关键字 2 作废
+        System.out.println(lruCache.get(2)); // 返回 -1 (未找到)
+        lruCache.put(4, 4); // 该操作会使得关键字 1 作废
+        System.out.println(lruCache.get(1)); // 返回 -1 (未找到)
+        System.out.println(lruCache.get(3)); // 返回 3
+        System.out.println(lruCache.get(4)); // 返回 4
+
     }
 }

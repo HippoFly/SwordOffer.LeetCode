@@ -35,8 +35,9 @@ public class Q25_ReverseKNodes {
      * @return
      */
     public ListNode reverseKGroup(ListNode head, int k) {
-        // 判断当前是否有 k 个节点
+        //
         ListNode next = head;
+        // 判断当前是否有 k 个节点
         for (int i = 0; i < k; i++) {
             if (next == null) {
                 return head; // 不足 k 个节点，直接返回原链表
@@ -74,7 +75,7 @@ public class Q25_ReverseKNodes {
             prev = curr;
             curr = next;
         }
-        return prev; // 返回新的头节点
+        return prev; // 返回新的头节点：这里end 只会参与判断，不会被返回，从 end 本身以及之后依然保持顺序
     }
 
     public static void main(String[] args) {

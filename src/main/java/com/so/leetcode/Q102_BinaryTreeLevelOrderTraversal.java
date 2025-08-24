@@ -26,49 +26,46 @@ public class Q102_BinaryTreeLevelOrderTraversal {
      * @return
      */
     public List<List<Integer>> levelOrder(TreeNode root) {
-        // 结果列表
+        // 阶段 1：结果容器
         List<List<Integer>> result = new ArrayList<>();
+        if (root == null) return result;
 
-        // 如果根节点为空，直接返回空结果
-        if (root == null) {
-            return result;
-        }
-
-        // 使用队列：记住队列符合FIFO原则，即offer()队尾  poll()队首
+        // 阶段 2：初始化队列，把根节点放进去
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root); // 根节点入队
+        queue.offer(root);
 
+        // 阶段 3：循环处理队列，直到队列为空
         while (!queue.isEmpty()) {
-            int levelSize = queue.size(); // 当前层的节点数
-            List<Integer> currentLevel = new ArrayList<>(); // 存储当前层的节点值
+            // 阶段 3.1：记录当前层的节点数量
+            int size = queue.size();
+            List<Integer> currentLevel = new ArrayList<>();
 
-            for (int i = 0; i < levelSize; i++) {
-                TreeNode node = queue.poll(); // 取出队首节点
-                currentLevel.add(node.val); // 添加节点值到当前层列表
+            // 阶段 3.2：处理这一层的所有节点
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();  // 弹出队首节点
+                currentLevel.add(node.val);    // 加入本层结果
 
-                // 将左右子节点加入队列
-                if (node.left != null) {
-                    queue.offer(node.left);
-                }
-                if (node.right != null) {
-                    queue.offer(node.right);
-                }
+                // 阶段 3.3：把下一层的子节点加入队列
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
             }
 
-            result.add(currentLevel); // 将当前层的结果添加到最终结果
+            // 阶段 3.4：把本层结果加入总结果
+            result.add(currentLevel);
         }
 
+        // 阶段 4：返回最终结果
         return result;
     }
     public static void main(String[] args) {
         // 创建一个包含节点 1 到 7 的二叉树
-        TreeNode root = new TreeNode(7);
-        root.left = new TreeNode(5);
-        root.right = new TreeNode(6);
-        root.left.left = new TreeNode(1);
-        root.left.right = new TreeNode(2);
-        root.right.left = new TreeNode(3);
-        root.right.right = new TreeNode(4);
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.left = new TreeNode(4);
+//        root.left.right = new TreeNode(2);
+        root.right.left = new TreeNode(5);
+        root.right.right = new TreeNode(6);
 
         Q102_BinaryTreeLevelOrderTraversal solution = new Q102_BinaryTreeLevelOrderTraversal();
 

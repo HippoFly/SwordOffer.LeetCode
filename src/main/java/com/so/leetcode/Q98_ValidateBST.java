@@ -16,36 +16,45 @@ import static org.junit.Assert.assertTrue;
  * @link <a href=""></a>
  **/
 public class Q98_ValidateBST {
+
+    /**
+     * 做法：
+     *
+     * 从根节点开始，允许区间是 (-∞, +∞)。
+     *
+     * 递归左子树时，更新最大值：(min, node.val)
+     *
+     * 递归右子树时，更新最小值：(node.val, max)
+     *
+     * 如果有节点不在区间内 → 直接返回 false。
+     * @param root
+     * @return
+     */
     public boolean isValidBST(TreeNode root) {
-        return isValidBSTHelper(root, Long.MIN_VALUE, Long.MAX_VALUE);
+        // 初始时，根节点的允许范围是 (-∞, +∞)
+        return validate(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
     /**
-     * 递归辅助函数，用于验证二叉搜索树
-     *
-     * @param root 当前节点
-     * @param minVal 当前节点值的最小允许值
-     * @param maxVal 当前节点值的最大允许值
-     * @return 返回当前子树是否为有效的二叉搜索树
+     * 递归检查一棵树是否是 BST
+     * @param node 当前节点
+     * @param min  该节点允许的最小值（必须大于 min）
+     * @param max  该节点允许的最大值（必须小于 max）
      */
-    private boolean isValidBSTHelper(TreeNode root, long minVal, long maxVal) {
-        // 递归终止条件：当前节点为空，返回 true
-        if (root == null) {
-            return true;
-        }
+    private boolean validate(TreeNode node, long min, long max) {
+        // 空节点天然合法
+        if (node == null) return true;
 
-        // 当前节点值必须在 (minVal, maxVal) 范围内
-        if (root.val <= minVal || root.val >= maxVal) {
+        // 当前节点值必须在 (min, max) 区间内
+        if (node.val <= min || node.val >= max) {
             return false;
         }
 
-        // 递归验证左子树和右子树
-        // 左子树的值必须小于当前节点值，更新 maxVal 为当前节点值
-        boolean validLeft = isValidBSTHelper(root.left, minVal, root.val);
-        // 右子树的值必须大于当前节点值，更新 minVal 为当前节点值
-        boolean validRight = isValidBSTHelper(root.right, root.val, maxVal);
-
-        return validLeft && validRight;
+        // 递归检查左右子树
+        // 左子树最大值受当前节点限制
+        // 右子树最小值受当前节点限制
+        return validate(node.left, min, node.val) &&
+                validate(node.right, node.val, max);
     }
 
     @Test

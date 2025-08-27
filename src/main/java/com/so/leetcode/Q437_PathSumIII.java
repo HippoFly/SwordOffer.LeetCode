@@ -38,7 +38,7 @@ public class Q437_PathSumIII {
         }
 
         // 从根节点开始计算路径和
-        countPaths(root, (long) targetSum);
+        countPaths(root, targetSum);
 
         // 对左右子树递归计算路径和
         pathSum(root.left, targetSum);

@@ -3,11 +3,12 @@ package com.so.leetcode;
 import com.so.common.TreeNode;
 
 /**
- * 236. 二叉树的最近公共祖先
+ * 236. 二叉树的最近公共祖先 （所有的节点值不同）
  * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
- *
+ * <p>
  * 最近公共祖先的定义为：“对于有根树 T 的两个节点 p、q，
  * 最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+ *
  * @author FlyHippo
  * @version 1.0
  * @created 2025-04-16 17:01
@@ -21,9 +22,10 @@ public class Q236_LowestCommonAncestor {
      * 1，如果当前节点为空或等于 p 或 q，则返回。
      * 2，定义遍历返回的 left 和 right，分别表示在左子树和右子树中查找 p 和 q 的结果。
      * 3，对所有结果分条件返回
+     *
      * @param root 树的根节点
-     * @param p 节点 p
-     * @param q 节点 q
+     * @param p    节点 p
+     * @param q    节点 q
      * @return 最近公共祖先节点
      */
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
@@ -40,18 +42,17 @@ public class Q236_LowestCommonAncestor {
         // 递归查找右子树
         TreeNode right = lowestCommonAncestor(root.right, p, q);
 
-        // 如果左子树和右子树都找到了节点，则当前节点为最近公共祖先
+        // 如果左子树返回非空，右子树也返回非空 → 说明 p、q 分别在左右子树，那当前 root 就是最近公共祖先。
         if (left != null && right != null) {
             return root;
         }
 
         // 如果左子树找到了节点，返回左子树找到的节点
-        if (left != null) {
-            return left;
-        }
-
+        if (left != null) return left;
         // 如果右子树找到了节点，返回右子树找到的节点
-        return right;
+        if (right != null) return right;
+
+        return null;
     }
 
     public static void main(String[] args) {

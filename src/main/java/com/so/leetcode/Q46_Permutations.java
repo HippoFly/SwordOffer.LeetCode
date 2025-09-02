@@ -30,10 +30,13 @@ import java.util.List;
  * @link <a href=""></a>
  **/
 public class Q46_Permutations {
+
+    List<List<Integer>> result = new ArrayList<>();
+
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        boolean[] used = new boolean[nums.length];
-        backtrack(nums, new ArrayList<>(), used, result);
+        boolean[] used = new boolean[nums.length]; // 标记数组已经使用的状态
+        List<Integer> cur = new ArrayList<>(); // 当前正在构建的排列
+        backtrack(nums, cur, used);
         return result;
     }
 
@@ -43,23 +46,26 @@ public class Q46_Permutations {
      * @param nums    原始数组，包含不重复的整数
      * @param current 当前正在构建的排列
      * @param used    标记数组，用于指示nums中的每个元素是否已被使用
-     * @param result  存储所有可能排列的列表
      */
-    private void backtrack(int[] nums, List<Integer> current, boolean[] used, List<List<Integer>> result) {
+    private void backtrack(int[] nums, List<Integer> current, boolean[] used) {
+        // 0.加入结果 并终止递归
         // 当当前排列的长度与原始数组长度相等时，添加当前排列到结果中
         if (current.size() == nums.length) {
             result.add(new ArrayList<>(current));
             return;
         }
-        // 遍历原始数组中的每个元素
+
         for (int i = 0; i < nums.length; i++) {
             // 如果当前元素未被使用，则尝试将其添加到当前排列中
             if (!used[i]) {
+                // 1.暂态标记
                 used[i] = true;
                 current.add(nums[i]);
-                // 递归调用backtrack函数，继续构建排列
-                backtrack(nums, current, used, result);
-                // 回溯，移除当前排列的最后一个元素，并标记该元素为未使用
+
+                // 2.开始递归
+                backtrack(nums, current, used);
+
+                // 3.回溯，移除刚才加的元素，撤销刚才标记
                 current.remove(current.size() - 1);
                 used[i] = false;
             }

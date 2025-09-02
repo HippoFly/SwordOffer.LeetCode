@@ -29,9 +29,11 @@ import java.util.List;
  * @link <a href=""></a>
  **/
 public class Q78_Subsets {
+    List<List<Integer>> result = new ArrayList<>();
+
     public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        backtrack(nums, 0, new ArrayList<>(), result);
+        List<Integer> cur = new ArrayList<>();
+        backtrack(nums, 0, cur);
         return result;
     }
 
@@ -42,19 +44,18 @@ public class Q78_Subsets {
      * @param nums    原始数组，用于生成子集
      * @param start   当前考虑的数组起始索引，避免重复选择
      * @param current 当前构建的子集
-     * @param result  存储所有生成的子集的结果列表
      */
-    private void backtrack(int[] nums, int start, List<Integer> current, List<List<Integer>> result) {
-        // 每一层递归都记录当前子集，因为每个节点都可以是一个子集
+    private void backtrack(int[] nums, int start, List<Integer> current) {
+        // 0.加入结果，终止递归（这里没条件，因为父级的 for 的次数本身被限制）
         result.add(new ArrayList<>(current));
 
         // 从当前索引开始遍历数组元素
         for (int i = start; i < nums.length; i++) {
-            // 将当前元素添加到子集中，这是做出选择的步骤
+            // 1.暂态加入
             current.add(nums[i]);
-            // 进入下一层递归，继续选择下一个元素
-            backtrack(nums, i + 1, current, result);
-            // 回溯，撤销之前的选择，以便尝试其他可能的元素组合
+            //  2.进入下一层递归，继续选择下一个元素
+            backtrack(nums, i + 1, current);
+            // 3.回溯，撤销加入
             current.remove(current.size() - 1);
         }
     }

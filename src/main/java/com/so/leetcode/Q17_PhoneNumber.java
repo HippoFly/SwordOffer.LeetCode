@@ -6,6 +6,15 @@ import java.util.List;
 /**
  * 17. 电话号码的字母组合
  *
+ * 示例 1：
+ *
+ * 输入：digits = "23"
+ * 输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
+ * 示例 2：
+ *
+ * 输入：digits = ""
+ * 输出：[]
+ *
  * @author FlyHippo
  * @version 1.0
  * @created 2025-05-08 14:39
@@ -26,14 +35,15 @@ public class Q17_PhoneNumber {
             "wxyz"  // 9
     };
 
+    List<String> result = new ArrayList<>();
+
     public List<String> letterCombinations(String digits) {
-        List<String> result = new ArrayList<>();
         // 输入边界处理
         if (digits == null || digits.length() == 0) {
             return result;
         }
         //
-        backtrack(digits, 0, new StringBuilder(), result);
+        backtrack(digits, 0, new StringBuilder());
         return result;
     }
 
@@ -41,12 +51,12 @@ public class Q17_PhoneNumber {
      * 回溯函数，用于生成所有可能的字母组合
      * 注意这里结果组合长度 == 输入数字个数
      * 并且是组合，所以递归需要在for遍历中
+     *
      * @param digits 输入的数字字符串
      * @param index  当前处理的数字字符的索引
      * @param path   当前生成的字母组合路径
-     * @param result 存储所有生成的字母组合的结果列表
      */
-    private void backtrack(String digits, int index, StringBuilder path, List<String> result) {
+    private void backtrack(String digits, int index, StringBuilder path) {
         // 当前处理的数字字符索引等于数字字符串长度时，将当前路径转换为字符串并添加到结果列表中
         if (index == digits.length()) {
             result.add(path.toString());
@@ -60,7 +70,7 @@ public class Q17_PhoneNumber {
         for (char c : letters.toCharArray()) {
             path.append(c); // 做出选择
             // 在做出选择后，递归调用回溯函数处理下一个数字字符
-            backtrack(digits, index + 1, path, result); // 进入下一层
+            backtrack(digits, index + 1, path); // 进入下一层
             // 回溯，撤销之前的选择
             path.deleteCharAt(path.length() - 1); // 回溯
         }

@@ -30,33 +30,8 @@ import java.util.List;
  **/
 public class Q39_CombinationSum {
 
- /*
-    // 这里没有剪枝，而且也有重复排序问题
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> res = new ArrayList<>();
-        backtrack(res, new ArrayList<>(), candidates, target, 0);
-        return res;
 
-    }
-
-    public void backtrack(List<List<Integer>> res, List<Integer> path, int[] candidates, int target, Integer tempSum) {
-        if (tempSum > target) {
-            return;
-        }
-        if (tempSum == target) {
-//            res.add(path);
-            res.add(new ArrayList<>(path)); // ✅ 正确方式
-            return;
-        }
-        for (int i = 0; i < candidates.length; i++) {
-            path.add(candidates[i]);
-            tempSum += candidates[i];
-            backtrack(res, path, candidates, target, tempSum);
-            path.remove(path.size() - 1);
-            tempSum -= candidates[i];
-        }
-
-    }*/
+    List<List<Integer>> res = new ArrayList<>();
 
     /*
     * ✅ 引入 start 参数 防止回头选择之前的元素，避免产生 [2,3,2] 和 [2,2,3] 被视为不同组合的问题
@@ -65,24 +40,23 @@ public class Q39_CombinationSum {
     *
     * */
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> res = new ArrayList<>();
         Arrays.sort(candidates); // 排序是为了剪枝和去重（保证组合不重复）
-        backtrack(res, new ArrayList<>(), candidates, target, 0, 0);
+        List<Integer> path = new ArrayList<>();
+        backtrack(path, candidates, target, 0, 0);
         return res;
     }
 
     /**
      * 使用回溯法寻找所有加和为特定目标数的组合
      *
-     * @param res        存储所有符合条件的组合的列表
      * @param path       当前遍历路径
      * @param candidates 候选数字数组
      * @param target     目标和
-     * @param tempSum    当前路径的和
+     * @param tempSum    当前的和
      * @param start      当前候选数字的起始索引
      */
-    public void backtrack(List<List<Integer>> res, List<Integer> path, int[] candidates, int target, int tempSum, int start) {
-        // 如果当前路径的和超过了目标和，回溯
+    public void backtrack(List<Integer> path, int[] candidates, int target, int tempSum, int start) {
+        // 如果当前路径的和超过了目标和，回溯剪纸
         if (tempSum > target) {
             return;
         }
@@ -95,9 +69,9 @@ public class Q39_CombinationSum {
         // 遍历候选数字，尝试添加到当前路径中
         for (int i = start; i < candidates.length; i++) {
             path.add(candidates[i]); // 添加当前候选数字到路径
-            tempSum += candidates[i]; // 更新当前路径的和
+            tempSum = tempSum + candidates[i]; // 更新当前路径的和
             // 递归调用，继续探索下一个数字，允许重复使用当前元素
-            backtrack(res, path, candidates, target, tempSum, i);
+            backtrack(path, candidates, target, tempSum, i);
             // 回溯，移除当前数字，尝试下一个可能的数字
             path.remove(path.size() - 1);
             tempSum -= candidates[i]; // 更新当前路径的和

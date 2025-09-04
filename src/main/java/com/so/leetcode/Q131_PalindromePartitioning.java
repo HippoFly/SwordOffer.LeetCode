@@ -27,41 +27,48 @@ import java.util.List;
 public class Q131_PalindromePartitioning {
     public static void main(String[] args) {
         Q131_PalindromePartitioning partitioning = new Q131_PalindromePartitioning();
-        System.out.println(partitioning.partition("AAABB"));
+        System.out.println(partitioning.partition("ABCBB"));
     }
 
-    private String string;
-    private List<List<String>> result = new ArrayList<>();
-    private List<String> currentPartition = new ArrayList<>();
+    List<List<String>> result = new ArrayList<>();
 
     public List<List<String>> partition(String s) {
-        string = s;
-
-        backtrack(0);
+        List<String> currentList = new ArrayList<>();
+        backtrack(s, 0, currentList);
         return result;
     }
 
-    private void backtrack(int start) {
-        // 所有字符都已分割完，添加当前分割方案到结果中
-        if (start == string.length()) {
-            result.add(new ArrayList<>(currentPartition));
+    /**
+     *
+     * @param s 待切割的字符串
+     * @param start 字符串的起始位置
+     * @param currentList 当前分割方案
+     */
+    private void backtrack(String s, int start, List<String> currentList) {
+        // 如果已经遍历完字符串，找到一个有效分割
+        if (start == s.length()) {
+            result.add(new ArrayList<>(currentList)); // 将当前分割结果加入结果集
             return;
         }
 
-        // 尝试所有可能的分割位置
-        for (int i = start; i < string.length(); i++) {
-            String subStr = string.substring(start, i + 1);
-
-            // 如果当前子串是回文，加入当前路径
-            if (isPalindrome(subStr)) {
-                currentPartition.add(subStr);
-                backtrack(i + 1);  // 继续递归分割后面的字符
-                currentPartition.remove(currentPartition.size() - 1);  // 回溯
+        // 从 start 开始遍历字符串
+        for (int end = start + 1; end <= s.length(); end++) {
+            String substring = s.substring(start, end); // 这里其实是从左起，截取左边的子串
+            if (isPalindrome(substring)) {  // 如果是回文
+                currentList.add(substring);  // 添加到当前分割方案
+                backtrack(s, end, currentList);  // 继续回溯
+                currentList.remove(currentList.size() - 1);  // 回溯，移除当前子串
             }
         }
     }
 
-    // 双指针法判断是否是回文串
+
+    /**
+     * 双指针法从首尾 判断是否是回文串
+     *
+     * @param s 需要判断的字符串
+     * @return true，是回文字符串
+     */
     private boolean isPalindrome(String s) {
         int left = 0;
         int right = s.length() - 1;

@@ -42,12 +42,13 @@ public class Q79_WordSearch {
     }
 
     /**
+     * 完全匹配 true；匹配失败，false
      * 递归
-     * 1. 双判：结果，返回（越界4，访问，字符）
-     * 2. 访问
-     * 3. 布尔四方向
-     * 4。不访问
-     * 5. 返回
+     * 1. 判 true 和判 false
+     * 2. 标记访问
+     * 3. 递归布尔四方向
+     * 4. 取消访问标记
+     * 5. 返回 3 结果
      *
      * @param i     即将访问的数组 行坐标
      * @param j     列坐标
@@ -55,30 +56,28 @@ public class Q79_WordSearch {
      * @return 匹配完成
      */
     private boolean dfs(char[][] board, String word, int i, int j, int index, boolean[][] visited) {
+        // 1. 判 true 和判 false
+
         // 终止条件：匹配完成
         if (index == word.length()) {
             return true;
         }
 
-        // 剪枝：
-        // i越界 /
-        // j越界 /
-        // 已访问 /
-        // 字符不匹配
+
         if (
-                        i < 0 || i >= board.length ||
-                        j < 0 || j >= board[0].length ||
-                        visited[i][j] ||
-                        board[i][j] != word.charAt(index)
+                i < 0 || i >= board.length || // i越界 /
+                        j < 0 || j >= board[0].length ||  // j越界 /
+                        visited[i][j] ||  // 已访问 /
+                        board[i][j] != word.charAt(index) // 字符不匹配
         ) {
             return false;
         }
 
         // 如果到这一步，那么有之前的的未越界，未访问过，且当前索引字符匹配
-        // 标记为已访问
+        // 2. 标记访问
         visited[i][j] = true;
 
-        // 向四个方向探索
+        // 向四个方向探索，4个‘or’任一满足则满足
         boolean found = dfs(board, word, i + 1, j, index + 1, visited) ||
                 dfs(board, word, i - 1, j, index + 1, visited) ||
                 dfs(board, word, i, j + 1, index + 1, visited) ||

@@ -7,9 +7,9 @@ import java.util.List;
 /**
  * 51. N 皇后
  * n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
- *
+ * <p>
  * 给你一个整数 n ，返回所有不同的 n 皇后问题 的解决方案。
- *
+ * <p>
  * 每一种解法包含一个不同的 n 皇后问题 的棋子放置方案，该方案中 'Q' 和 '.' 分别代表了皇后和空位。
  *
  * @author FlyHippo
@@ -19,94 +19,114 @@ import java.util.List;
 
 public class Q51_NQueens {
 
-    List<List<String>> solutions;
+
+    // 结果列表，用来存放所有解
+    List<List<String>> solutions = new ArrayList<>();
+
     /**
-     * queens[0]代表0行的列序数， queens[1]代表1行的列序数
+     * 1. 棋盘初始化：
+     * <p>
+     * 创建一个 n x n 的二维棋盘，初始化为 '.'，表示每个位置上没有皇后。
+     * 使用 Arrays.fill(row, '.') 来填充每一行的所有位置。
+     * <p>
+     * 2. 回溯法的核心：
+     * <p>
+     * backtrack(solutions, board, row) 是核心递归函数。
+     * 递归基准：当 row == n 时，说明已经成功放置了 n 个皇后，当前解是有效的。
+     * 递归过程：从第 row 行开始，尝试将皇后放置在每一列。如果合法（调用 isValid 判断），则放置皇后并递归进入下一行。
+     * <p>
+     * 3. 合法性检查 isValid：
+     * <p>
+     * 需要确保在当前 row 行和 col 列放置皇后不会与其他已经放置的皇后冲突：
+     * 检查列：遍历之前的每一行，看看当前列是否已经有皇后。
+     * 检查左上对角线：遍历从当前行和列向左上对角线方向的所有格子，看看是否有皇后。
+     * 检查右上对角线：同理，遍历右上对角线方向。
+     * <p>
+     * 4. 回溯撤销：
+     * <p>
+     * 放置皇后后，需要尝试下一列/下一行。当发现某种情况不行时，回溯到当前行，撤销对该位置的选择（即将其恢复为 '.'）。
+     * <p>
+     * 5. 构建解 constructSolution：
+     * <p>
+     * 每当递归成功（即放置完所有皇后），将当前棋盘的状态（二维数组）转换为字符串并保存到 solutions 中。
+     * 这一步是将每个解从字符数组转换成字符串列表，使得返回的结果格式符合题目要求。
+     *
+     * @param n
+     * @return
      */
-    int[] queens;
-    int n;
-
     public List<List<String>> solveNQueens(int n) {
-        // 用于存储每个解法的结果
-        this.solutions = new ArrayList<>();
-        // 用于存储当前解法中皇后的位置
-        this.queens = new int[n];
-        // 棋盘格局
-        this.n = n;
-        // 初始化 queens 数组，全部置为 -1，表示初始时没有皇后放置在棋盘上
-        Arrays.fill(queens, -1);
 
 
-        // 开始回溯搜索解法
-        backtrack(0);
-        return solutions;
+        // 创建 n x n 的棋盘，并初始化为 '.'
+        char[][] board = new char[n][n];
+        for (char[] row : board) {
+            Arrays.fill(row, '.'); // 棋盘的每个位置初始化为 '.'
+        }
+
+        // 从第 0 行开始，开始回溯搜索
+        backtrack(board, 0);
+        return solutions; // 返回所有解
     }
 
-    // 回溯搜索解法
-
     /**
-     * 按+1递归是行数，内部循环遍历+1是列数
-     *
-     * @param row 行数
+     * 回溯
+     * @param board
+     * @param row 当前行索引
      */
-    private void backtrack(int row) {
-        // 如果当前行超过了棋盘的大小，则说明这一分支递归完毕
-        if (row == n) {
-            // 将当前解法添加到结果列表中
-            solutions.add(generateBoard());
+    private void backtrack(char[][] board, int row) {
+        // 终止条件：所有行都放置了皇后，找到一个解
+        if (row == board.length) {
+            solutions.add(constructSolution(board)); // 构建当前解并添加到结果列表
             return;
         }
 
-        // 遍历当前行的每一列，尝试放置皇后
-        for (int col = 0; col < n; col++) {
-            // 检查当前位置是否可以放置皇后
-            if (isValid(row, col)) {
-                // 在当前位置放置皇后
-                queens[row] = col;
-                // 继续搜索下一行
-                backtrack(row+1);
-                // 回溯到当前行，移除当前位置的皇后，尝试下一个位置
-                queens[row] = -1;
+        // 尝试在当前行的每一列放置皇后
+        for (int col = 0; col < board.length; col++) {
+            // 如果当前列放置皇后是合法的
+            if (isValid(board, row, col)) {
+                board[row][col] = 'Q';  // 放置皇后
+                backtrack(board, row + 1);  // 递归处理下一行
+                board[row][col] = '.';  // 回溯，撤销当前选择
             }
         }
     }
 
-    // 检查当前位置是否可以放置皇后
-
-    /**
-     * @param row 当前行
-     * @param col 当前列
-     * @return 有效位置
-     */
-    private boolean isValid(int row, int col) {
-        // 遍历之前已经放置(i < row,不是整个的行长度)的皇后的位置，检查是否有冲突
+    // 检查在当前行和列放置皇后是否有效
+    private boolean isValid(char[][] board, int row, int col) {
+        // 检查当前列是否已有皇后
         for (int i = 0; i < row; i++) {
-            // queens[0]代表0行的列序数， queens[1]代表1行的列序数
-            //queens[i] == col：这个条件检查当前位置是否和已放置的皇后在同一列，如果在同一列则表示有冲突，返回 false。
-            //Math.abs(row - i) == Math.abs(col - queens[i])：这个条件检查当前位置是否和已放置的皇后在同一条对角线上（包括主对角线和副对角线）。如果两个位置的行差等于列差，即 |row - i| == |col - queens[i]|，则表示在同一条对角线上，也表示有冲突，返回 false。
-            if (queens[i] == col || Math.abs(row - i) == Math.abs(col - queens[i])) {
-                return false;
+            if (board[i][col] == 'Q') {
+                return false; // 如果有皇后，返回 false
             }
         }
+
+        // 检查左上对角线是否已有皇后
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j] == 'Q') {
+                return false; // 如果有皇后，返回 false
+            }
+        }
+
+        // 检查右上对角线是否已有皇后
+        for (int i = row - 1, j = col + 1; i >= 0 && j < board.length; i--, j++) {
+            if (board[i][j] == 'Q') {
+                return false; // 如果有皇后，返回 false
+            }
+        }
+
+        // 如果所有检查通过，返回 true
         return true;
     }
 
-    // 生成棋盘的字符串表示
-    private List<String> generateBoard() {
-        List<String> board = new ArrayList<>();
-        // 遍历每一行
-        for (int row = 0; row < n; row++) {
-            char[] rowString = new char[n];
-            // 初始化每一行的字符串，全部置为 '.'
-            Arrays.fill(rowString, '.');
-
-            // 在当前行的皇后位置上放置 'Q'
-            rowString[queens[row]] = 'Q';
-            // 将当前行的字符串添加到棋盘列表中
-            board.add(new String(rowString));
+    // 构建一个当前棋盘的解（将字符数组转换为字符串形式）
+    private List<String> constructSolution(char[][] board) {
+        List<String> solution = new ArrayList<>();
+        for (char[] row : board) {
+            solution.add(new String(row));  // 将字符数组转换为字符串并加入解中
         }
-        return board;
+        return solution;
     }
+
 
     public static void main(String[] args) {
         Q51_NQueens solution = new Q51_NQueens();

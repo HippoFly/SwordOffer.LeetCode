@@ -14,22 +14,23 @@ import java.util.List;
  * @link <a href=""></a>
  **/
 public class Q22_Parentheses {
+    List<String> result = new ArrayList<>();
+
     public List<String> generateParenthesis(int n) {
-        List<String> result = new ArrayList<>();
-        backtrack(result, "", 0, 0, n);
+        backtrack( "", 0, 0, n);
         return result;
     }
 
     /**
      * 使用回溯法生成所有可能的括号组合
-     *  这里通过 有括号< 左括号< n
-     * @param result  存储所有有效括号组合的列表
-     * @param current 当前构建的括号字符串
-     * @param leftBracket    已添加的左括号数量
-     * @param rightBracket   已添加的右括号数量
-     * @param n       指定的括号对数
+     * 这里通过 有括号< 左括号< n
+     *
+     * @param current      当前构建的括号字符串
+     * @param leftBracket  已添加的左括号数量
+     * @param rightBracket 已添加的右括号数量
+     * @param n            指定的括号对数
      */
-    private void backtrack(List<String> result, String current, int leftBracket, int rightBracket, int n) {
+    private void backtrack(String current, int leftBracket, int rightBracket, int n) {
         // 当前括号字符串达到指定长度时，添加到结果列表
         // n是指定的括号对数
         if (current.length() == n * 2) {
@@ -38,11 +39,11 @@ public class Q22_Parentheses {
         }
         // 如果左括号没有到限定的括号数,添加左括号
         if (leftBracket < n) {
-            backtrack(result, current + "(", leftBracket + 1, rightBracket, n);
+            backtrack(current + "(", leftBracket + 1, rightBracket, n);
         }
         // 如果右括号数依然小于左括号，添加右括号
         if (rightBracket < leftBracket) {
-            backtrack(result, current + ")", leftBracket, rightBracket + 1, n);
+            backtrack(current + ")", leftBracket, rightBracket + 1, n);
         }
     }
 

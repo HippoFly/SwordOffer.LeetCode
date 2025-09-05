@@ -34,24 +34,24 @@ public class Q739_DailyTemperatures {
     public int[] dailyTemperatures(int[] temperatures) {
         // 气温列表长度
         int n = temperatures.length;
-        // 存储结果的数组，初始值都为0，表示如果没有找到更高的气温，则等待天数为0
+        // 存储等待新高的数组，初始值都为‘0’，表示该索引后没有找到更高的气温
         int[] answer = new int[n];
-        // 单调递减栈，存储索引，用于记录气温递减的日期索引
-        Stack<Integer> stack = new Stack<>();
+        // 记录未找到更高温度的天的索引，且暗含其中天数 对应的温度是单调递减的（要是有增就被弹出，而且记录了）
+        Stack<Integer> remainDaysStack = new Stack<>();
 
         // 遍历气温列表
         for (int i = 0; i < n; i++) {
 
-            // 当栈不为空且当前气温大于栈顶索引对应的气温时，说明找到了更高气温的日子
-            // temperatures[stack.peek()]具体来说，它获取的是栈顶索引所指向的那一天的气温。
-            while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
-                // 弹出栈顶索引，计算当前索引与栈顶索引的差值，即等待天数
-                int prevIndex = stack.pop();
-                // i当前天，prevIndex是
+            // 当栈不为空且当前气温大于栈顶索引对应的气温时，说明找到比了更高气温的日子
+            // temperatures[remainDaysStack.peek()]具体来说，它获取的是栈顶索引所指向的那一天的气温。
+            while (!remainDaysStack.isEmpty() && temperatures[i] > temperatures[remainDaysStack.peek()]) {
+
+                // 弹出最后一个没找到更高的天，现代天 i - 最后天 就是差值天数
+                int prevIndex = remainDaysStack.pop();
                 answer[prevIndex] = i - prevIndex;
             }
             // 当前索引入栈，维持单调递减栈
-            stack.push(i);
+            remainDaysStack.push(i);
 
         }
 
@@ -64,7 +64,7 @@ public class Q739_DailyTemperatures {
 //        int[] temperatures = {73, 74, 75, 71, 69, 72, 76, 73};
 //        int[] result = solution.dailyTemperatures(temperatures);
 //        System.out.println(Arrays.toString(result)); // 输出 [1, 1, 4, 2, 1, 1, 0, 0]
-        int[] temperatures2 = {5, 6, 7, 3, 1, 4, 8, 5};
+        int[] temperatures2 = {4, 2, 3, 1, 10, 0};
         int[] result2 = solution.dailyTemperatures(temperatures2);
         System.out.println(Arrays.toString(result2)); // 输出 [1, 1, 4, 2, 1, 1, 0, 0]
     }

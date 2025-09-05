@@ -15,9 +15,9 @@ import java.util.Stack;
  */
 public class Q155_MinStack {
 
-    // 主栈
-    private Stack<Integer> stack=new Stack<>();
-    // 辅助栈，用于存储最小值
+    // 主栈，顺序入栈
+    private Stack<Integer> orderedStack =new Stack<>();
+    // 辅助栈，用于记忆比较每次加入元素后的-最小值
     private Stack<Integer> minStack=new Stack<>();
 
 
@@ -25,7 +25,7 @@ public class Q155_MinStack {
      * 将元素 x 推入栈中
      */
     public void push(int x) {
-        stack.push(x);
+        orderedStack.push(x);
         // 如果辅助栈为空，或者当前元素小于等于辅助栈栈顶，则压入辅助栈
         if (minStack.isEmpty() || x <= minStack.peek()) {
             minStack.push(x);
@@ -36,7 +36,7 @@ public class Q155_MinStack {
      * 删除栈顶的元素
      */
     public void pop() {
-        int poppedElement = stack.pop();
+        int poppedElement = orderedStack.pop();
         // 如果弹出的元素是当前最小值，则同步弹出辅助栈的栈顶
         if (poppedElement == minStack.peek()) {
             minStack.pop();
@@ -47,7 +47,7 @@ public class Q155_MinStack {
      * 获取栈顶元素
      */
     public int top() {
-        return stack.peek();
+        return orderedStack.peek();
     }
 
     /**

@@ -37,7 +37,7 @@ public class Q153_FindMinimumInRotatedSortedArray {
 
             // 分支1：判断左半部分是否有序
             if (nums[mid] >= nums[left]) {
-                // 子分支1.1：左半部分有序时，左边界可能是最小值
+                // 子分支1.1：左半部分有序时（则这部分最小为 左边界 nums[left]，有更新比较的必要）
                 if (min > nums[left]) {
                     min = nums[left]; // 更新最小值
                 }
@@ -48,7 +48,7 @@ public class Q153_FindMinimumInRotatedSortedArray {
             }
             // 分支2：左半部分无序（说明右半部分有序）
             else {
-                // 子分支2.1：中间值可能是最小值
+                // 子分支2.1：中间的 mid 为这有序段的最小值，有比较的必要性
                 if (min > nums[mid]) {
                     min = nums[mid]; // 更新最小值
                 }

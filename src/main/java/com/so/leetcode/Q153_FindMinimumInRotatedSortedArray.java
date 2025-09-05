@@ -30,21 +30,31 @@ package com.so.leetcode;
 public class Q153_FindMinimumInRotatedSortedArray {
     public int findMin(int[] nums) {
         int left = 0, right = nums.length - 1;
-        int min = Integer.MAX_VALUE;
+        int min = Integer.MAX_VALUE; // 初始化最小值为最大整数
+
         while (left <= right) {
             int mid = (left + right) / 2;
-            //左有序
+
+            // 分支1：判断左半部分是否有序
             if (nums[mid] >= nums[left]) {
+                // 子分支1.1：左半部分有序时，左边界可能是最小值
                 if (min > nums[left]) {
-                    min = nums[left];
-                } else {
-                    left = mid + 1;
+                    min = nums[left]; // 更新最小值
                 }
-            } else {
+                // 子分支1.2：最小值可能在右半部分（无序部分）
+                else {
+                    left = mid + 1; // 搜索右半部分
+                }
+            }
+            // 分支2：左半部分无序（说明右半部分有序）
+            else {
+                // 子分支2.1：中间值可能是最小值
                 if (min > nums[mid]) {
-                    min = nums[mid];
-                } else {
-                    right = mid - 1;
+                    min = nums[mid]; // 更新最小值
+                }
+                // 子分支2.2：最小值可能在左半部分（无序部分）
+                else {
+                    right = mid - 1; // 搜索左半部分
                 }
             }
         }

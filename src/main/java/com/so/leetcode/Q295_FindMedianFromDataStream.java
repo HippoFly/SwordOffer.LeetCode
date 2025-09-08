@@ -26,30 +26,28 @@ public class Q295_FindMedianFromDataStream {
     }
 
     /**
-     * queMin从小到大，顶部是小堆的最大
-     * queMax从大到大，顶部是大堆的最小
-     * 添加的时候，先加小堆，并且**小于中位数**后加入小堆
-     * <p>
-     * <p>
-     * <p>
-     * **最关键处
-     * （这里通过每次添加过后，判断大堆加1会大于等于小堆的长度）
-     * 比如以5,4,3,2,1案例
-     * 5先加小堆
-     * 4加入时由于 4<5先加小堆，判断小堆超大堆2，则吐出小堆最大给大堆
+     * 向数据结构中添加一个数字
+     * 使用两个堆来维护数据的有序性：
+     * - queMin: 最大堆，保存较小的一半数据
+     * - queMax: 最小堆，保存较大的一半数据
+     * 保持两个堆的大小平衡，确保queMin的大小要么等于queMax，要么比queMax多1
      *
-     * @param num
+     * @param num 要添加的数字
      */
     public void addNum(int num) {
-
         if (queMin.isEmpty() || num <= queMin.peek()) {
+            // 将num加入较小部分（queMin最大堆）
             queMin.offer(num);
+            // 如果较小部分比大部分多出超过1个元素
             if (queMax.size() + 1 < queMin.size()) {
+                // 将较小部分的最大值移到大部分中，保持平衡
                 queMax.offer(queMin.poll());
             }
         } else {
             queMax.offer(num);
+            // 如果较大部分的元素个数超过了较小部分
             if (queMax.size() > queMin.size()) {
+                // 将较大部分的最小值移到较小部分中，保持平衡
                 queMin.offer(queMax.poll());
             }
         }

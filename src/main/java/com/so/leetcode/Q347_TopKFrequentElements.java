@@ -30,43 +30,32 @@ public class Q347_TopKFrequentElements {
      4，提取排序后列表中前 k 个元素的键。
      */
     public int[] topKFrequent(int[] nums, int k) {
-        HashMap<Integer,Integer> frequencyMap = new HashMap<>();
+        // 1. 统计频率
+        Map<Integer, Integer> frequencyMap = new HashMap<>();
         for (int num : nums) {
             frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
         }
 
-        List<Map.Entry<Integer, Integer>> list = new ArrayList<>(frequencyMap.entrySet());
-        Collections.sort(list, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
+        // 2. 用最小堆维护Top K（按频率排序）
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>(
+                (a, b) -> frequencyMap.get(a) - frequencyMap.get(b)
+        );
 
-        int[] ints = new int[k];
-        for (int i = 0; i < ints.length; i++) {
-            ints[i]=list.get(i).getKey();
-        }
-        return ints;
-    }
-
-    public int[] topKFrequent2(int[] nums, int k) {
-        // 使用字典，统计每个元素出现的次数，元素为键，元素出现的次数为值
-        HashMap<Integer,Integer> map = new HashMap();
-        for (int num : nums) {
-            map.put(num, map.getOrDefault(num, 0) + 1);
-        }
-        // 遍历map，用最小堆保存频率最大的k个元素
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> map.get(a) - map.get(b));
-        for (Integer key : map.keySet()) {
-            if (pq.size() < k) {
-                pq.add(key);
-            } else if (map.get(key) > map.get(pq.peek())) {
-                pq.remove();
-                pq.add(key);
+        for (int num : frequencyMap.keySet()) {
+            minHeap.offer(num);
+            if (minHeap.size() > k) {
+                minHeap.poll(); // 移除频率最小的元素
             }
         }
-        // 取出最小堆中的元素
-        int[] ints = new int[k];
-        for (int i = 0; i < ints.length; i++) {
-            ints[i]=pq.remove();
+
+        // 3. 提取结果
+        int[] result = new int[k];
+        for (int i = 0; i < k; i++) {
+            result[i] = minHeap.poll();
         }
-        return ints;
+        return result;
     }
+
+
 
 }

@@ -28,30 +28,24 @@ public class Q55_JumpGame {
      * @return 如果能够到达最后一个下标，返回 true；否则返回 false
      */
     public boolean canJump(int[] nums) {
-        // 记录当前能够到达的最远位置
-        int maxReach = 0;
+        int maxReach = 0; // 当前能够到达的最远位置
 
         for (int i = 0; i < nums.length; i++) {
-            // 这一步不容易写出来：进入循环后，首先判断当前位置是否已经被覆盖在可到达范围内
-            // 如果当前i在 可到达范围内
-            if (i <= maxReach) {
+            // 如果当前位置已经超出了之前能够到达的最远位置，则无法到达
+            if (i > maxReach) {
+                return false;
+            }
 
-                // 在当前i能到的时候，更新最大能到 的位置： 当前位置 + 当前位置能跳的距离
-                // ，顺便在下一次比较的maxReach以及记录了前几步的 可到达范围
-                maxReach = Math.max(maxReach, i + nums[i]);
+            // 更新能够到达的最远位置
+            maxReach = Math.max(maxReach, i + nums[i]);
 
-                // 如果已经能够到达或超过数组末尾，直接返回 true
-                if (maxReach >= nums.length - 1) {
-                    return true;
-                }
-                // 当前i 不在可到达范围内，跳出循环
-            } else {
-                // 当前位置无法被到达，直接跳出循环并返回 false
-                break;
+            // 如果已经能够到达最后一个位置，提前返回
+            if (maxReach >= nums.length - 1) {
+                return true;
             }
         }
 
-        return false;
+        return true;
     }
 
     public static void main(String[] args) {

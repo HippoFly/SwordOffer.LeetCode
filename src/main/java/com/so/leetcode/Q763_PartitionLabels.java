@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 763. 划分字母区间
+ * 763. 划分字母区间 （划分字母不重复到各自分区）
  * <p>
  * 给你一个字符串 s 。我们要把这个字符串划分为尽可能多的片段，同一字母最多出现在一个片段中。例如，字符串 "ababcc" 能够被分为 ["abab", "cc"]，但类似 ["aba", "bcc"] 或 ["ab", "ab", "cc"] 的划分是非法的。
  * <p>
@@ -44,14 +44,16 @@ public class Q763_PartitionLabels {
      * @return 返回一个整数列表，表示每个分区的长度
      */
     public List<Integer> partitionLabels(String s) {
+
+
         // 记录每个字符最后出现的位置
         int[] lastOccurrence = new int[26];
-
         // 遍历字符串，更新每个字符最后出现的位置
         for (int i = 0; i < s.length(); i++) {
-            // 制作类似26个字母的Hash表
+            // 制作类似26个字母的Hash表， 这里很巧妙，最后位置刚好会覆写
             lastOccurrence[s.charAt(i) - 'a'] = i;
         }
+
 
         List<Integer> result = new ArrayList<>();
         int start = 0;

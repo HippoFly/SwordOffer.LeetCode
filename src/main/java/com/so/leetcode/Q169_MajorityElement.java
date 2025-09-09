@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * 169. 多数元素
  * 给定一个大小为 n 的数组 nums ，返回其中的多数元素。多数元素是指在数组中出现次数 大于 ⌊ n/2 ⌋ 的元素。
  *
@@ -14,39 +13,15 @@ import java.util.Map;
  **/
 
 public class Q169_MajorityElement {
+
+
     /**
-     * HashMap过半计数法
+     * 投票算法
+     * 因为 众数超过一半，所以如果一个数出现的次数超过一半，那么这个数出现的次数一定能够抵消其他所有数字
      * @param nums
      * @return
      */
     public int majorityElement(int[] nums) {
-        if(nums.length==1){
-            return nums[0];
-        }
-        int halfLen=nums.length/2;
-        Map<Integer,Integer> temp = new HashMap();
-        for (int num : nums) {
-            if(temp.get(num)==null){
-                temp.put(num,1);
-            }else {
-                Integer times = temp.get(num);
-                if(times>=halfLen){
-                    return num;
-                }else {
-                    temp.put(num, ++times);
-                }
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * 投票算法
-     *
-     * @param nums
-     * @return
-     */
-    public int majorityElement2(int[] nums) {
         int count = 0;      // 投票计数器
         int candidate = 0;  // 候选人
 
@@ -55,7 +30,11 @@ public class Q169_MajorityElement {
                 candidate = num;  // 如果当前没有支持者，换候选人
             }
             // 如果当前数等于候选人，投他；否则反对
-            count += (num == candidate) ? 1 : -1;
+            if (num == candidate) {
+                count++;
+            } else {
+                count--;
+            }
         }
 
         return candidate;  // 最终剩下的候选人就是多数元素

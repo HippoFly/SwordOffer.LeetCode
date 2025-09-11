@@ -72,7 +72,7 @@ public class Q279_PerfectSquares {
         dp[0] = 0;
 
         for (int i = 1; i <= n; i++) {
-            for (int j = 1; j * j <= i; j++) {
+            for (int j = 1; j * j <= i; j++) { //遍历平方候选数字 比如对于 12 其候选数为 1^2, 2^2, 3^2, 只要 j*j <= i。
                 dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
             }
         }

@@ -21,26 +21,22 @@ public class Q287_FindDuplicateNumber {
      * @return
      */
     public int findDuplicate(int[] nums) {
-        // 定义快慢指针，初始时都指向数组的第一个元素
-        int slow = nums[0];
-        int fast = nums[nums[0]];
-
-        // 找到快慢指针相遇的点
+        // 阶段一：找“相遇点”
+        int slow = nums[0];          // 慢指针：每次走一步
+        int fast = nums[nums[0]];    // 快指针：每次走两步
         while (slow != fast) {
             slow = nums[slow];
             fast = nums[nums[fast]];
         }
 
-        // 将快指针重新置为数组的第一个元素
+        // 阶段二：找“环入口”（即重复的数）
+        // 将其中一个指针移回起点（这里用 0 作为起点）
         fast = 0;
-
-        // 快慢指针以相同的速度移动，直到它们再次相遇
         while (slow != fast) {
             slow = nums[slow];
             fast = nums[fast];
         }
-
-        // 返回相遇的点，即重复的数字
+        // 相遇位置就是环入口；值即为重复数
         return slow;
 
     }

@@ -13,43 +13,34 @@ package com.so.leetcode;
  **/
 public class Q31_NextPermutation {
     /**
-     * Step 1
-     * 找到最后一个可以变大的位置
-     * 字典中从后往前找第一个可修改字母
-     * Step 2
-     * 找一个刚好比当前大的数替换
-     * 找一个刚好能让单词变大的字母
-     * Step 3
-     * 替换，让整体变大一点点
-     * 改变一个字母，让单词变大
-     * Step 4
-     * 反转后面，使其最小
-     * 把后面的字母按最小顺序排列
+     * 1.
+     *  从后向前  找到第一个  非递增  的元素 nums[i]（即 nums[i] < nums[i+1]）。
+     * 2.
+     * 如果找到 i，则从后向前找到第一个  大于 nums[i]  的元素 nums[j]，并交换 nums[i]和 nums[j]。
+     * 3.
+     *  反转 nums[i+1:]，使其变为升序（保证是最小的下一个排列）。 【这里必须解释为何倒序，因为找的是“最小变换”，而第一步都是目标点右边-都是降序-代表很大，想减小就倒过来，让其最接近最小差距】
+     *
      * @param nums
      */
     public void nextPermutation(int[] nums) {
-        int n = nums.length;
-        int i = n - 2;
+        int i = nums.length - 2;// 这里-2是因为下一步刚好记录 i
 
-        // Step 1: 从后往前找第一个 nums[i] < nums[i+1]
-        // 循环结束时  i < 0 或者 nums[i] < nums[i+1]
+        // 1. 从后向前找第一个非递增的元素
         while (i >= 0 && nums[i] >= nums[i + 1]) {
             i--;
         }
 
-        // Step 2: 从后往前找第一个 nums[j] > nums[i]
-        // j  从后往前找，找到第一个 nums[j] > nums[i]
+        // 2. 如果找到 i，则找第一个大于 nums[i] 的元素并交换
         if (i >= 0) {
-            int j = n - 1;
-            while (nums[j] <= nums[i]) {
+            int j = nums.length - 1;
+            while (j >= 0 && nums[j] <= nums[i]) {
                 j--;
             }
-            // Step 3: 交换 nums[i] 和 nums[j]
             swap(nums, i, j);
         }
 
-        // Step 4: 反转 i+1 到末尾，使其为最小可能的排列
-        reverse(nums, i + 1, n - 1);
+        // 3. 反转 nums[i+1:]（使其升序）
+        reverse(nums, i + 1);
     }
 
     // 辅助函数：交换两个元素
@@ -60,7 +51,8 @@ public class Q31_NextPermutation {
     }
 
     // 辅助函数：反转数组从 start 到 end 的部分
-    private void reverse(int[] nums, int start, int end) {
+    private void reverse(int[] nums, int start) {
+        int end = nums.length - 1;
         while (start < end) {
             swap(nums, start, end);
             start++;

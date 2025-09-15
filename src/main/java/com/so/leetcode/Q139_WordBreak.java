@@ -28,8 +28,7 @@ public class Q139_WordBreak {
         for (int i = 1; i <= n; i++) {
             //
             for (int j = 0; j < i; j++) {
-                // dp[j] == true：说明 s[0..j-1] 这一段已经可以成功拆分了
-                // s.substring(j, i)：从 j 到 i 的子串（也就是 s[j..i-1]）是否是一个单词？
+                // dp[j] == true： 前 j 个已经包含； j 到 i 也包含
                 if (dp[j] && wordSet.contains(s.substring(j, i))) {
                     dp[i] = true;
                     break;

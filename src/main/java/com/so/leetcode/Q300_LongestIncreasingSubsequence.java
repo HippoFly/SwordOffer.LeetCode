@@ -24,10 +24,10 @@ public class Q300_LongestIncreasingSubsequence {
             // 在每个上限内遍历找递增子序列
             for (int j = 0; j < i; j++) {
                 if (nums[i] > nums[j]) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                    dp[i] = Math.max(dp[i], dp[j] + 1); //针对每个 i 截止位置记录最长递增子序列长度
                 }
             }
-            maxLen = Math.max(maxLen, dp[i]);
+            maxLen = Math.max(maxLen, dp[i]); // 每个 i 成型后 记录全局最大
         }
 
         return maxLen;

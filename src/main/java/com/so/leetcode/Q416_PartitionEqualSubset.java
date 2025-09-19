@@ -21,29 +21,28 @@ package com.so.leetcode;
 public class Q416_PartitionEqualSubset {
 
     /**
-     *  判断是否存在一个子集，使得它的和为 totalSum / 2。
-     *  如果不能被 2 整除 → 一定不可能
-     *  否则，就变成了：是否能选出若干个数，使得它们的和为 target
+     *  换位思考，就是这个数组能否凑出
+     *  子集的和为 总和的一半
      *
      * @param nums
      * @return
      */
     public boolean canPartition(int[] nums) {
         int sum = 0;
-        // 求和
+
         for (int num : nums) sum += num;
 
         // 如果总和为奇数，不可能平分
         if (sum % 2 != 0) return false;
-        int target = sum / 2;
 
-        // dp[i] 表示是否能组成和为 i 的子集，+1保留空集的结果
+        // 总和的一半 接下来找符合的子集
+        int target = sum / 2;
+        // dp[i] 表示是否能组成 和为i 的子集，长度+1代表保留空集和0 的结果
         boolean[] dp = new boolean[target + 1];
 
         dp[0] = true;  // 空集可以组成 0
 
 
-        // 数字集合依次取出数字，方便在二层循环中删除
         for (int num : nums) {
             // 每次从target开始递减1，判断：当前j元素，或j-target是否组成子集
             for (int j = target; j >= num; j--) {

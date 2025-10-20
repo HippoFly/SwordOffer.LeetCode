@@ -55,9 +55,13 @@ public class Q15_3Sum {
 
         for (int i = 0; i < nums.length - 2; i++) {
             // 如果当前数字大于 0，则三数之和一定大于 0，所以结束循环
-            if (nums[i] > 0) break;
-            // 去重
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            if (nums[i] > 0) {
+                break;
+            }
+            // 跳过前面数字的重复部分
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
 
             int left = i + 1, right = nums.length - 1;
             while (left < right) {
@@ -65,9 +69,9 @@ public class Q15_3Sum {
                 if (sum == 0) {
                     result.add(Arrays.asList(nums[i], nums[left], nums[right]));
 
-                    // 左指针重复则左++
+                    // 左指针跳重，左++
                     while (left < right && nums[left] == nums[left + 1]) left++;
-                    // 右指针重复则右--
+                    // 右指针跳重，右--
                     while (left < right && nums[right] == nums[right - 1]) right--;
 
                     // 指针向中间移动

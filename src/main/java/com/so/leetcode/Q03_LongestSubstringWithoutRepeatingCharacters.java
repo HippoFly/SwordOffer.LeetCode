@@ -42,7 +42,7 @@ public class Q03_LongestSubstringWithoutRepeatingCharacters {
             return 0;
         }
         // 记录窗口内不重复字符的集合
-        HashSet<Character> set = new HashSet<>();
+        HashSet<Character> existCharSet = new HashSet<>();
         // 窗口的左右边界，均从0开始
         int left = 0; int right = 0;
         int maxLen = 0;
@@ -53,8 +53,8 @@ public class Q03_LongestSubstringWithoutRepeatingCharacters {
 
             // 如果不包含当前字符，则添加到集合中，并且窗口右边界右移
 
-            if (!set.contains(curChar)) {
-                set.add(curChar);
+            if (!existCharSet.contains(curChar)) {
+                existCharSet.add(curChar);
                // 窗口最大值更新
                 maxLen = Math.max(maxLen, right - left + 1);
                 right++;
@@ -62,7 +62,7 @@ public class Q03_LongestSubstringWithoutRepeatingCharacters {
                 // 如果包含当前字符，则窗口左边界向右移动，直到不包含当前字符为止
 
             } else {
-                set.remove(s.charAt(left));
+                existCharSet.remove(s.charAt(left));
                 left++;
             }
             // 综合以上if我们发现一旦右边指针遇到重复字符，左边界会向右移动，直到不包含当前字符为止，这个条件判断的else会多次生序

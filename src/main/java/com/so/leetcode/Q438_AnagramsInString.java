@@ -48,9 +48,7 @@ public class Q438_AnagramsInString {
      * @return 符合的数组
      */
     public List<Integer> findAnagrams(String sample, String target) {
-        if (sample == null || target == null) {
-            throw new IllegalArgumentException("Input strings must not be null");
-        }
+
 
         int sampleLen = sample.length(), targetLen = target.length();
         if (sampleLen < targetLen || targetLen == 0) {

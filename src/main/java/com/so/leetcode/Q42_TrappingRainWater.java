@@ -36,43 +36,25 @@ public class Q42_TrappingRainWater {
         // 初始化左右两侧的最大高度为 0
         int leftMax = 0, rightMax = 0;
         // 初始化结果变量为 0，用于累计雨水容量
-        int result = 0;
+        int water = 0;
 
         // 双指针向中间移动
+
         while (left < right) {
+            // 更新左右两侧的最大高度
+            leftMax = Math.max(leftMax, height[left]);
+            rightMax = Math.max(rightMax, height[right]);
 
-            // 总是处理较矮的一边（因为较矮的一边是瓶颈）
-
+            // 总是移动高度较小的一侧指针
             if (height[left] < height[right]) {
-
-                // 更新左边最大值或计算雨水
-
-                //情况1：height[left] >= leftMax（当前位置比左边最高还高或相等）
-                //这意味着当前位置是一个"高点"，无法在它上面接雨水
-                //它只能成为别人接雨水的"墙"
-                //所以我们要更新左边最高墙的记录：leftMax = height[left]
-                if (height[left] >= leftMax) {
-                    leftMax = height[left];  // 更新最大值
-
-                    //情况2：height[left] < leftMax（当前位置比左边最高低）
-                    //这意味着当前位置是一个"低点"，它可以接雨水
-                    //所以要计算当前位置能接多少雨水
-                    //即：当前位置的高度减去左边最高墙的高度
-                } else {
-                    result += leftMax - height[left];  // 累加雨水
-                }
+                water += leftMax - height[left]; // 累加当前左指针位置的积水量
                 left++;
             } else {
-                // 更新右边最大值或计算雨水
-                if (height[right] >= rightMax) {
-                    rightMax = height[right];  // 更新最大值
-                } else {
-                    result += rightMax - height[right];  // 累加雨水
-                }
+                water += rightMax - height[right]; // 累加当前右指针位置的积水量
                 right--;
             }
         }
-        return result;
+        return water;
     }
 
     public static void main(String[] args) {
